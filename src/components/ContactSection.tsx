@@ -1,5 +1,4 @@
-import React from 'react';
-import { Mail, FileText, Globe, ArrowUpRight } from 'lucide-react';
+import { FileText, ArrowUpRight } from 'lucide-react';
 import type { PortfolioData } from '../types/portfolio';
 import { LinkedinIcon, GithubIcon } from './Icons';
 
@@ -9,99 +8,74 @@ interface ContactSectionProps {
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ personal }) => {
   return (
-    <section id="contact" className="py-12 pb-24 scroll-mt-20">
-      <div className="flex items-center gap-2 mb-6">
-        <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-          <Mail className="w-4 h-4 text-indigo-400" />
-        </div>
-        <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Let's Connect</h2>
-          <p className="text-xs text-slate-400 font-mono">Inquiries / Opportunities</p>
-        </div>
+    <section id="contact" className="py-12 pb-28 scroll-mt-16">
+      <h2 className="text-xl font-semibold text-gray-900 tracking-tight mb-2">
+        Get in touch
+      </h2>
+      <p className="text-sm text-gray-600 mb-6 max-w-xl">
+        I am open to new opportunities, technical discussions, and full-time roles. Connect with me on LinkedIn or reach out via email.
+      </p>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {/* LinkedIn */}
+        <a
+          href={personal.linkedin}
+          target="_blank"
+          rel="noreferrer"
+          className="p-4 rounded-2xl bg-white hover:bg-gray-50 border border-gray-200 transition-colors flex items-center justify-between group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+              <LinkedinIcon className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500">Professional</p>
+              <p className="text-sm font-medium text-gray-900">LinkedIn</p>
+            </div>
+          </div>
+          <ArrowUpRight className="w-4 h-4 text-gray-400 group-hover:text-gray-900 transition-colors" />
+        </a>
+
+        {/* GitHub */}
+        <a
+          href={personal.github}
+          target="_blank"
+          rel="noreferrer"
+          className="p-4 rounded-2xl bg-white hover:bg-gray-50 border border-gray-200 transition-colors flex items-center justify-between group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-700">
+              <GithubIcon className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500">Code</p>
+              <p className="text-sm font-medium text-gray-900">GitHub</p>
+            </div>
+          </div>
+          <ArrowUpRight className="w-4 h-4 text-gray-400 group-hover:text-gray-900 transition-colors" />
+        </a>
+
+        {/* Resume */}
+        <a
+          href={personal.resumeUrl}
+          className="p-4 rounded-2xl bg-white hover:bg-gray-50 border border-gray-200 transition-colors flex items-center justify-between group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+              <FileText className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500">Document</p>
+              <p className="text-sm font-medium text-gray-900">Resume PDF</p>
+            </div>
+          </div>
+          <ArrowUpRight className="w-4 h-4 text-gray-400 group-hover:text-gray-900 transition-colors" />
+        </a>
       </div>
 
-      <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-b from-[#13151c] to-[#0e1014] border border-[#262936] shadow-xl">
-        <div className="max-w-2xl">
-          <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
-            Ready to collaborate on Generative AI or Full-Stack projects?
-          </h3>
-          <p className="text-sm text-slate-300 leading-relaxed mb-6">
-            I am actively exploring full-time engineering positions and high-impact generative AI advisory or contracting.
-            Feel free to connect on LinkedIn or reach out via email.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* LinkedIn Card */}
-          <a
-            href={personal.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            className="p-4 rounded-xl bg-[#171a23] hover:bg-[#1e222e] border border-[#282d3c] hover:border-indigo-500/50 transition-all flex items-center justify-between group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-[#0a66c2]/20 flex items-center justify-center text-[#0a66c2]">
-                <LinkedinIcon className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-mono text-slate-400">Professional</p>
-                <p className="text-sm font-semibold text-white group-hover:text-indigo-300 transition-colors">
-                  LinkedIn Profile
-                </p>
-              </div>
-            </div>
-            <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
-          </a>
-
-          {/* GitHub Card */}
-          <a
-            href={personal.github}
-            target="_blank"
-            rel="noreferrer"
-            className="p-4 rounded-xl bg-[#171a23] hover:bg-[#1e222e] border border-[#282d3c] hover:border-indigo-500/50 transition-all flex items-center justify-between group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center text-slate-200">
-                <GithubIcon className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-mono text-slate-400">Codebase</p>
-                <p className="text-sm font-semibold text-white group-hover:text-indigo-300 transition-colors">
-                  GitHub / MrYharon
-                </p>
-              </div>
-            </div>
-            <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
-          </a>
-
-          {/* Resume PDF Card */}
-          <a
-            href={personal.resumeUrl}
-            className="p-4 rounded-xl bg-[#171a23] hover:bg-[#1e222e] border border-[#282d3c] hover:border-indigo-500/50 transition-all flex items-center justify-between group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400">
-                <FileText className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-mono text-slate-400">Document</p>
-                <p className="text-sm font-semibold text-white group-hover:text-indigo-300 transition-colors">
-                  Resume (PDF)
-                </p>
-              </div>
-            </div>
-            <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
-          </a>
-        </div>
-
-        {/* Custom Domain Note */}
-        <div className="mt-6 pt-5 border-t border-[#20232d] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400 font-mono">
-          <div className="flex items-center gap-2">
-            <Globe className="w-4 h-4 text-indigo-400" />
-            <span>Custom Domain Ready</span>
-          </div>
-          <span className="text-slate-400">© {new Date().getFullYear()} Hugh</span>
-        </div>
+      <div className="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
+        <span>{personal.email}</span>
+        <span>© {new Date().getFullYear()} {personal.name}</span>
       </div>
     </section>
   );

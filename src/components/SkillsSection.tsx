@@ -1,5 +1,4 @@
 import React from 'react';
-import { Cpu, Sparkles, Layers, Database } from 'lucide-react';
 import type { SkillCategory } from '../types/portfolio';
 
 interface SkillsSectionProps {
@@ -7,45 +6,27 @@ interface SkillsSectionProps {
 }
 
 export const SkillsSection: React.FC<SkillsSectionProps> = ({ categories }) => {
-  const getCategoryIcon = (index: number) => {
-    switch (index) {
-      case 0:
-        return <Sparkles className="w-4 h-4 text-indigo-400" />;
-      case 1:
-        return <Layers className="w-4 h-4 text-cyan-400" />;
-      default:
-        return <Database className="w-4 h-4 text-emerald-400" />;
-    }
-  };
-
   return (
-    <section id="skills" className="py-12 border-b border-[#20232a] scroll-mt-20">
-      <div className="flex items-center gap-2 mb-6">
-        <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-          <Cpu className="w-4 h-4 text-indigo-400" />
-        </div>
-        <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Technical Stack & Skills</h2>
-          <p className="text-xs text-slate-400 font-mono">Specializations / Capabilities</p>
-        </div>
-      </div>
+    <section id="skills" className="py-12 border-b border-gray-100 scroll-mt-16">
+      <h2 className="text-xl font-semibold text-gray-900 tracking-tight mb-4">
+        Skills & Technologies
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {categories.map((cat, idx) => (
+        {categories.map((cat) => (
           <div
             key={cat.title}
-            className="p-6 rounded-2xl bg-[#111318] border border-[#222530] hover:border-[#323645] transition-all"
+            className="p-5 rounded-2xl bg-white border border-gray-200"
           >
-            <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-[#1f222d]">
-              {getCategoryIcon(idx)}
-              <h3 className="text-sm font-semibold text-slate-200 tracking-wide">{cat.title}</h3>
-            </div>
+            <h3 className="text-sm font-medium text-gray-900 mb-3 pb-2 border-b border-gray-100">
+              {cat.title}
+            </h3>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {cat.skills.map((skill) => (
                 <span
                   key={skill.name}
-                  className="text-xs font-mono px-3 py-1.5 rounded-lg bg-[#171922] text-slate-300 border border-[#262936] hover:border-indigo-500/40 hover:text-white transition-colors"
+                  className="text-xs px-2.5 py-1 rounded-full bg-gray-50 border border-gray-200 text-gray-700"
                 >
                   {skill.name}
                 </span>
