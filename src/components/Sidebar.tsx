@@ -2,12 +2,10 @@ import React from 'react';
 import {
   Menu,
   Plus,
-  MessageSquare,
+  Bookmark,
   User,
   Cpu,
-  Briefcase,
   Mail,
-  FileText,
   PanelLeftClose,
 } from 'lucide-react';
 import type { Project } from '../types/portfolio';
@@ -33,53 +31,58 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Mobile backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/20 backdrop-blur-xs z-40 lg:hidden"
+          className="fixed inset-0 bg-black/10 backdrop-blur-xs z-40 lg:hidden"
           onClick={onToggle}
         />
       )}
 
       <aside
-        className={`fixed top-0 left-0 bottom-0 z-50 flex flex-col bg-[#f0f4f9] border-r border-[#e1e6ed] transition-all duration-200 ease-in-out ${
+        className={`fixed top-0 left-0 bottom-0 z-50 flex flex-col bg-white border-r border-neutral-100 transition-all duration-200 ease-in-out ${
           isOpen ? 'w-68 translate-x-0' : '-translate-x-full lg:translate-x-0 lg:w-18'
         }`}
       >
         {/* Top Header: Hamburger & Logo */}
-        <div className="flex items-center justify-between px-4 h-16 shrink-0">
+        <div className="flex items-center justify-between px-4 h-16 shrink-0 border-b border-neutral-100">
           <button
             onClick={onToggle}
-            className="p-2 text-gray-700 hover:text-black hover:bg-[#dde3ea] rounded-full transition-colors"
+            className="p-2 text-neutral-600 hover:text-black hover:bg-neutral-100 rounded-full transition-colors"
             title={isOpen ? 'Collapse Menu' : 'Expand Menu'}
           >
             <Menu className="w-5 h-5" />
           </button>
 
           {isOpen && (
-            <span className="font-semibold text-base text-black tracking-tight mr-auto ml-2">
-              Hugh
-            </span>
+            <div className="mr-auto ml-2 flex items-center gap-2">
+              <span className="font-semibold text-base text-black tracking-tight">
+                Hugh
+              </span>
+              <span className="text-[10px] font-mono text-neutral-400 bg-neutral-100 px-1.5 py-0.5 rounded">
+                blog
+              </span>
+            </div>
           )}
 
           {isOpen && (
             <button
               onClick={onToggle}
-              className="p-1.5 text-gray-500 hover:text-black hover:bg-[#dde3ea] rounded-full lg:flex hidden transition-colors"
+              className="p-1.5 text-neutral-400 hover:text-black hover:bg-neutral-100 rounded-full lg:flex hidden transition-colors"
             >
               <PanelLeftClose className="w-4 h-4" />
             </button>
           )}
         </div>
 
-        {/* Gemini "+ New Chat" style button */}
-        <div className="px-3 pt-1 pb-3">
+        {/* Top Quick Action */}
+        <div className="px-3 pt-3 pb-2">
           <button
             onClick={() => onNavigate('hero')}
-            className={`flex items-center gap-3 w-full py-2.5 px-3.5 rounded-full bg-[#dde3ea] hover:bg-[#d0d7e2] text-black text-sm font-medium transition-colors ${
+            className={`flex items-center gap-3 w-full py-2 px-3 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200/60 text-black text-xs font-medium transition-colors ${
               !isOpen ? 'justify-center px-0' : ''
             }`}
-            title="Go to Top / New Session"
+            title="Overview / Top"
           >
-            <Plus className="w-4 h-4 text-black shrink-0" />
-            {isOpen && <span className="truncate">New session</span>}
+            <Plus className="w-3.5 h-3.5 text-neutral-600 shrink-0" />
+            {isOpen && <span className="truncate">Top of page</span>}
           </button>
         </div>
 
@@ -88,44 +91,44 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {/* Main sections */}
           <div>
             {isOpen && (
-              <div className="px-3 mb-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                Navigation
+              <div className="px-3 mb-1.5 text-[11px] font-medium text-neutral-400 uppercase tracking-wider">
+                Index
               </div>
             )}
             <div className="space-y-0.5">
               <button
                 onClick={() => onNavigate('about')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-full text-sm text-left transition-colors ${
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-colors ${
                   activeSection === 'about'
-                    ? 'bg-gray-200 text-black font-semibold'
-                    : 'text-gray-700 hover:bg-[#dde3ea] hover:text-black'
+                    ? 'bg-neutral-100 text-black font-semibold'
+                    : 'text-neutral-600 hover:bg-neutral-50 hover:text-black'
                 } ${!isOpen ? 'justify-center px-0' : ''}`}
                 title="About"
               >
-                <User className="w-4 h-4 shrink-0 text-gray-700" />
-                {isOpen && <span className="truncate">About me</span>}
+                <User className="w-4 h-4 shrink-0 text-neutral-500" />
+                {isOpen && <span className="truncate">About</span>}
               </button>
 
               <button
                 onClick={() => onNavigate('skills')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-full text-sm text-left transition-colors ${
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-colors ${
                   activeSection === 'skills'
-                    ? 'bg-gray-200 text-black font-semibold'
-                    : 'text-gray-700 hover:bg-[#dde3ea] hover:text-black'
+                    ? 'bg-neutral-100 text-black font-semibold'
+                    : 'text-neutral-600 hover:bg-neutral-50 hover:text-black'
                 } ${!isOpen ? 'justify-center px-0' : ''}`}
-                title="Skills"
+                title="Stack"
               >
-                <Cpu className="w-4 h-4 shrink-0 text-gray-700" />
-                {isOpen && <span className="truncate">Skills & Stack</span>}
+                <Cpu className="w-4 h-4 shrink-0 text-neutral-500" />
+                {isOpen && <span className="truncate">Stack & Tools</span>}
               </button>
             </div>
           </div>
 
-          {/* Recent Projects */}
+          {/* Real Featured Projects */}
           <div>
             {isOpen && (
-              <div className="px-3 mb-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                Recent projects
+              <div className="px-3 mb-1.5 text-[11px] font-medium text-neutral-400 uppercase tracking-wider">
+                Projects
               </div>
             )}
             <div className="space-y-0.5">
@@ -135,14 +138,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <button
                     key={proj.id}
                     onClick={() => onNavigate(proj.id)}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-full text-sm text-left transition-colors ${
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-colors ${
                       isActive
-                        ? 'bg-gray-200 text-black font-semibold'
-                        : 'text-gray-700 hover:bg-[#dde3ea] hover:text-black'
+                        ? 'bg-neutral-100 text-black font-semibold'
+                        : 'text-neutral-600 hover:bg-neutral-50 hover:text-black'
                     } ${!isOpen ? 'justify-center px-0' : ''}`}
                     title={proj.title}
                   >
-                    <MessageSquare className="w-4 h-4 shrink-0 text-gray-600" />
+                    <Bookmark className="w-3.5 h-3.5 shrink-0 text-neutral-400" />
                     {isOpen && <span className="truncate">{proj.title}</span>}
                   </button>
                 );
@@ -150,37 +153,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
 
-          {/* Career & Contact */}
+          {/* Contact */}
           <div>
             {isOpen && (
-              <div className="px-3 mb-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                Background
+              <div className="px-3 mb-1.5 text-[11px] font-medium text-neutral-400 uppercase tracking-wider">
+                Connect
               </div>
             )}
             <div className="space-y-0.5">
               <button
-                onClick={() => onNavigate('experience')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-full text-sm text-left transition-colors ${
-                  activeSection === 'experience'
-                    ? 'bg-gray-200 text-black font-semibold'
-                    : 'text-gray-700 hover:bg-[#dde3ea] hover:text-black'
-                } ${!isOpen ? 'justify-center px-0' : ''}`}
-                title="Experience"
-              >
-                <Briefcase className="w-4 h-4 shrink-0 text-gray-700" />
-                {isOpen && <span className="truncate">Experience</span>}
-              </button>
-
-              <button
                 onClick={() => onNavigate('contact')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-full text-sm text-left transition-colors ${
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-colors ${
                   activeSection === 'contact'
-                    ? 'bg-gray-200 text-black font-semibold'
-                    : 'text-gray-700 hover:bg-[#dde3ea] hover:text-black'
+                    ? 'bg-neutral-100 text-black font-semibold'
+                    : 'text-neutral-600 hover:bg-neutral-50 hover:text-black'
                 } ${!isOpen ? 'justify-center px-0' : ''}`}
                 title="Contact"
               >
-                <Mail className="w-4 h-4 shrink-0 text-gray-700" />
+                <Mail className="w-4 h-4 shrink-0 text-neutral-500" />
                 {isOpen && <span className="truncate">Contact</span>}
               </button>
             </div>
@@ -188,46 +178,39 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Bottom Profile Bar */}
-        <div className="p-3 border-t border-[#e1e6ed] shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white text-sm font-medium shrink-0">
+        <div className="p-3 border-t border-neutral-100 shrink-0">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-full bg-black flex items-center justify-center text-white text-xs font-medium shrink-0">
               H
             </div>
 
             {isOpen && (
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-black truncate">Hugh</p>
-                <p className="text-xs text-gray-500 truncate">Software Engineer</p>
+                <p className="text-xs font-semibold text-black truncate">Hugh</p>
+                <p className="text-[11px] text-neutral-400 truncate">Builder & Engineer</p>
               </div>
             )}
           </div>
 
           {isOpen && (
-            <div className="mt-2.5 pt-2 border-t border-[#e1e6ed] flex items-center justify-around text-gray-700">
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                className="p-1.5 hover:text-black hover:bg-[#dde3ea] rounded-full transition-colors"
-                title="LinkedIn"
-              >
-                <LinkedinIcon className="w-4 h-4" />
-              </a>
+            <div className="mt-2.5 pt-2 border-t border-neutral-100 flex items-center justify-around text-neutral-600">
               <a
                 href="https://github.com/MrYharon"
                 target="_blank"
                 rel="noreferrer"
-                className="p-1.5 hover:text-black hover:bg-[#dde3ea] rounded-full transition-colors"
+                className="p-1 hover:text-black hover:bg-neutral-100 rounded-lg transition-colors"
                 title="GitHub"
               >
-                <GithubIcon className="w-4 h-4" />
+                <GithubIcon className="w-3.5 h-3.5" />
               </a>
               <a
-                href="#contact"
-                className="p-1.5 hover:text-black hover:bg-[#dde3ea] rounded-full transition-colors"
-                title="Resume"
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noreferrer"
+                className="p-1 hover:text-black hover:bg-neutral-100 rounded-lg transition-colors"
+                title="LinkedIn"
               >
-                <FileText className="w-4 h-4" />
+                <LinkedinIcon className="w-3.5 h-3.5" />
               </a>
             </div>
           )}

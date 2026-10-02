@@ -3,9 +3,8 @@ import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
-import { SkillsSection } from './components/SkillsSection';
+import { InteractiveSkills } from './components/InteractiveSkills';
 import { ProjectCard } from './components/ProjectCard';
-import { ExperienceSection } from './components/ExperienceSection';
 import { ContactSection } from './components/ContactSection';
 import { ChatInput } from './components/ChatInput';
 import { portfolioData } from './data/portfolioData';
@@ -35,7 +34,6 @@ export function App() {
       'about',
       'skills',
       ...portfolioData.projects.map((p) => p.id),
-      'experience',
       'contact',
     ];
 
@@ -59,8 +57,8 @@ export function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 flex flex-col font-sans selection:bg-gray-200 selection:text-black">
-      {/* Gemini Style Sidebar */}
+    <div className="min-h-screen bg-white text-neutral-900 flex flex-col font-sans selection:bg-neutral-200 selection:text-black">
+      {/* Seamless Minimalist Sidebar */}
       <Sidebar
         projects={portfolioData.projects}
         activeSection={activeSection}
@@ -89,20 +87,20 @@ export function App() {
             onExploreProjects={() => handleNavigate(portfolioData.projects[0].id)}
           />
 
-          {/* About Section */}
-          <AboutSection personal={portfolioData.personal} />
+          {/* About & Philosophy */}
+          <AboutSection />
 
-          {/* Skills Section */}
-          <SkillsSection categories={portfolioData.skillCategories} />
+          {/* Interactive Skills with Real Vector Icons & Detail Inspector */}
+          <InteractiveSkills skills={portfolioData.skills} />
 
           {/* Featured Projects Section */}
-          <section id="projects" className="py-12 border-b border-gray-100">
+          <section id="projects" className="py-12 border-b border-neutral-100">
             <div className="mb-6">
               <h2 className="text-xl font-semibold text-black tracking-tight">
-                Featured Projects
+                Featured Projects & Tools
               </h2>
-              <p className="text-sm text-gray-500 mt-1">
-                Selected engineering projects and applications
+              <p className="text-sm text-neutral-500 mt-1">
+                Real tools, extensions, and open-source applications I've built
               </p>
             </div>
 
@@ -118,9 +116,6 @@ export function App() {
             </div>
           </section>
 
-          {/* Experience Section */}
-          <ExperienceSection experience={portfolioData.experience} />
-
           {/* Contact Section */}
           <ContactSection personal={portfolioData.personal} />
         </main>
@@ -128,7 +123,7 @@ export function App() {
         {/* Soft bottom fade-out gradient so scrolling content smoothly fades behind prompt bar */}
         <div className="pointer-events-none fixed bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white via-white/80 to-transparent z-30" />
 
-        {/* Gemini Style Bottom Prompt Bar */}
+        {/* Bottom Prompt Bar */}
         <ChatInput
           portfolioData={portfolioData}
           onNavigate={handleNavigate}

@@ -24,7 +24,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
     {
       role: 'assistant',
       content:
-        `Hello! You can ask me anything about Hugh's projects, background, skills, or how to get in touch.`,
+        `Hey there! I can answer questions about Hugh's projects (like Echo and CodeScout), tech stack, or engineering philosophy.`,
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
@@ -37,10 +37,10 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
   }, [initialPrompt]);
 
   const quickPrompts = [
-    { label: 'Summarize experience', prompt: "Give me an overview of Hugh's experience" },
-    { label: 'Featured projects', prompt: 'What key projects has Hugh built?' },
-    { label: 'Autonomous Agent', prompt: 'Tell me about the Autonomous Multi-Agent project' },
-    { label: 'How to contact', prompt: 'How can I connect with or hire Hugh?' },
+    { label: 'What is Echo?', prompt: 'Tell me about the Echo browser extension' },
+    { label: 'Explain CodeScout', prompt: 'What is CodeScout and how does it work?' },
+    { label: 'Tech stack', prompt: 'What languages and frameworks does Hugh use?' },
+    { label: 'Contact', prompt: 'How can I connect with Hugh?' },
   ];
 
   const handleSendPrompt = (textToSend?: string) => {
@@ -59,43 +59,43 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
 
       const lower = query.toLowerCase();
 
-      if (lower.includes('agent') || lower.includes('orchestrator')) {
-        reply = `Hugh engineered an Autonomous Multi-Agent Task Orchestrator coordinating specialized subagents with tool calling and self-reflection loops.`;
-        action = { label: 'Jump to project', sectionId: 'agentic-ai-workflow' };
-      } else if (lower.includes('rag') || lower.includes('knowledge')) {
-        reply = `Hugh built an Enterprise Contextual RAG pipeline with hybrid dense-sparse search and cross-encoder re-ranking across 50,000+ technical documents.`;
-        action = { label: 'Jump to project', sectionId: 'enterprise-rag-engine' };
+      if (lower.includes('echo') || lower.includes('prompt')) {
+        reply = `Echo is a Manifest V3 Chrome extension that acts like Grammarly for AI prompting. It evaluates prompts in real-time inside ChatGPT, Claude, and Gemini with 100% local client-side heuristics and 1-click auto-correction.`;
+        action = { label: 'Jump to Echo project', sectionId: 'echo-prompt-coach' };
+      } else if (lower.includes('codescout') || lower.includes('trending') || lower.includes('github')) {
+        reply = `CodeScout is a full-stack trending GitHub tracker with Next.js 16 and FastAPI. It analyzes repository star velocity and provides an SSE-streamed AI coach for brainstorming portfolio projects.`;
+        action = { label: 'Jump to CodeScout', sectionId: 'codescout' };
       } else if (lower.includes('project')) {
-        reply = `Hugh has built multiple applications including an Autonomous Multi-Agent Orchestrator, an Enterprise RAG Engine, a Multimodal Creative Studio, and a Conversational Voice Assistant.`;
-        action = { label: 'View projects', sectionId: 'agentic-ai-workflow' };
-      } else if (lower.includes('contact') || lower.includes('hire') || lower.includes('email') || lower.includes('linkedin')) {
-        reply = `Hugh is currently open to full-time engineering roles and high-impact contracts. You can connect via LinkedIn (${portfolioData.personal.linkedin}) or email (${portfolioData.personal.email}).`;
+        reply = `Hugh's featured projects include Echo (a browser extension for AI prompt coaching) and CodeScout (a trending GitHub repository tracker).`;
+        action = { label: 'View projects', sectionId: 'echo-prompt-coach' };
+      } else if (lower.includes('contact') || lower.includes('email') || lower.includes('linkedin')) {
+        reply = `You can connect with Hugh via GitHub (${portfolioData.personal.github}), LinkedIn (${portfolioData.personal.linkedin}), or email (${portfolioData.personal.email}).`;
         action = { label: 'Go to contact', sectionId: 'contact' };
       } else if (lower.includes('skill') || lower.includes('tech') || lower.includes('stack')) {
-        reply = `Hugh's primary stack includes Python, TypeScript, React, Next.js, FastAPI, Vector Databases, and cloud deployment pipelines.`;
-        action = { label: 'View skills', sectionId: 'skills' };
+        reply = `Hugh works with TypeScript, JavaScript, Python, React, Next.js, FastAPI, Node.js, and Chrome MV3 browser extensions.`;
+        action = { label: 'View stack', sectionId: 'skills' };
       } else {
-        reply = `Hugh is a software engineer specializing in Generative AI systems, full-stack development, and modern cloud architectures.`;
+        reply = `Hugh is a software engineer building practical developer tools, browser extensions, and web applications.`;
         action = { label: 'View about', sectionId: 'about' };
       }
 
       setMessages([...newMessages, { role: 'assistant', content: reply, action }]);
       setIsTyping(false);
-    }, 350);
+    }, 300);
   };
 
   return (
     <div className="sticky bottom-4 z-40 px-4 sm:px-8 max-w-3xl mx-auto w-full">
       {/* Response Popover */}
       {isOpen && (
-        <div className="mb-3 p-4 sm:p-5 rounded-2xl bg-white border border-gray-200 shadow-xl">
-          <div className="flex items-center justify-between pb-2.5 border-b border-gray-100 mb-3">
+        <div className="mb-3 p-4 sm:p-5 rounded-2xl bg-white border border-neutral-200 shadow-xl">
+          <div className="flex items-center justify-between pb-2.5 border-b border-neutral-100 mb-3">
             <span className="text-xs font-semibold text-black">
               Assistant
             </span>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 text-gray-500 hover:text-black hover:bg-gray-100 rounded-full transition-colors"
+              className="p-1 text-neutral-400 hover:text-black hover:bg-neutral-100 rounded-full transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -111,7 +111,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
                   className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed ${
                     m.role === 'user'
                       ? 'bg-black text-white'
-                      : 'bg-gray-100 text-black border border-gray-200'
+                      : 'bg-neutral-100 text-black border border-neutral-200'
                   }`}
                 >
                   <p>{m.content}</p>
@@ -131,7 +131,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
               </div>
             ))}
             {isTyping && (
-              <div className="text-gray-400 text-xs italic">
+              <div className="text-neutral-400 text-xs italic">
                 Thinking...
               </div>
             )}
@@ -140,12 +140,12 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
       )}
 
       {/* Suggestion Pills */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
         {quickPrompts.map((item, idx) => (
           <button
             key={idx}
             onClick={() => handleSendPrompt(item.prompt)}
-            className="shrink-0 text-xs px-3.5 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-colors"
+            className="shrink-0 text-xs px-3 py-1.5 rounded-full bg-white hover:bg-neutral-100 border border-neutral-200 text-neutral-700 hover:text-black transition-colors shadow-2xs"
           >
             {item.label}
           </button>
@@ -153,8 +153,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
       </div>
 
       {/* Minimalist Input Capsule */}
-      <div className="relative flex items-center bg-white border border-gray-200 focus-within:border-black rounded-full px-4 py-2 transition-all shadow-sm">
-        <Sparkles className="w-4 h-4 text-gray-500 shrink-0 mr-2" />
+      <div className="relative flex items-center bg-white border border-neutral-200 focus-within:border-black rounded-full px-4 py-2 transition-all shadow-sm">
+        <Sparkles className="w-4 h-4 text-neutral-400 shrink-0 mr-2" />
 
         <input
           type="text"
@@ -165,14 +165,14 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
               handleSendPrompt();
             }
           }}
-          placeholder="Ask anything about Hugh..."
-          className="w-full bg-transparent text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
+          placeholder="Ask anything about Hugh's projects..."
+          className="w-full bg-transparent text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none"
         />
 
         <button
           onClick={() => handleSendPrompt()}
           disabled={!input.trim()}
-          className="p-1.5 rounded-full text-black hover:bg-gray-100 disabled:text-gray-300 disabled:hover:bg-transparent transition-colors ml-1"
+          className="p-1.5 rounded-full text-black hover:bg-neutral-100 disabled:text-neutral-300 disabled:hover:bg-transparent transition-colors ml-1"
           title="Send"
         >
           <Send className="w-4 h-4" />

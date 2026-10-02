@@ -4,25 +4,19 @@ export interface Project {
   tagline: string;
   category: string;
   overview: string;
-  whatIDid: string[];
-  generativeAiAspects: string[];
+  highlights: string[];
   techStack: string[];
   metrics?: string;
   demoUrl?: string;
   githubUrl?: string;
-  status: 'Completed' | 'In Development' | 'Production';
+  status: 'Active' | 'Shipped' | 'In Progress';
 }
 
-export interface SkillCategory {
-  title: string;
-  skills: { name: string; level?: string; icon?: string }[];
-}
-
-export interface Experience {
-  role: string;
-  company: string;
-  period: string;
-  description: string[];
+export interface TechSkill {
+  name: string;
+  category: 'Frontend' | 'Backend' | 'Languages' | 'Tools';
+  description: string;
+  slug: string;
 }
 
 export interface PortfolioData {
@@ -30,16 +24,12 @@ export interface PortfolioData {
     name: string;
     headline: string;
     role: string;
-    avatarUrl: string;
     bio: string;
-    location: string;
-    availability: string;
-    linkedin: string;
+    blogIntro: string;
     github: string;
+    linkedin: string;
     email: string;
-    resumeUrl: string;
   };
   projects: Project[];
-  skillCategories: SkillCategory[];
-  experience: Experience[];
+  skills: TechSkill[];
 }
