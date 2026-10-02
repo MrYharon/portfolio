@@ -14,11 +14,13 @@ export const Hero: React.FC<HeroProps> = ({ personal, onExploreProjects }) => {
       <div className="flex flex-col md:flex-row items-center md:items-start gap-7">
         {/* Minimal Avatar */}
         <div className="shrink-0">
-          <img
-            src={personal.avatarUrl || '/profile.png'}
-            alt={personal.name}
-            className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border border-neutral-200 shadow-xs"
-          />
+          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden bg-neutral-100 border border-neutral-200/90 shadow-sm flex items-center justify-center">
+            <img
+              src={personal.avatarUrl || '/profile.png'}
+              alt={personal.name}
+              className="w-full h-full object-cover scale-105"
+            />
+          </div>
         </div>
 
         {/* Bio & Headlines */}
