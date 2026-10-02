@@ -29,6 +29,7 @@ export interface PortfolioData {
     github: string;
     linkedin: string;
     email: string;
+    avatarUrl?: string;
   };
   projects: Project[];
   skills: TechSkill[];

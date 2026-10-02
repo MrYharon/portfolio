@@ -182,9 +182,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Bottom Profile Bar */}
         <div className="p-3 border-t border-neutral-100 shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-full bg-black flex items-center justify-center text-white text-xs font-medium shrink-0">
-              H
-            </div>
+            <img
+              src="/profile.png"
+              alt="Hugh"
+              className="w-7 h-7 rounded-full object-cover border border-neutral-200 shrink-0"
+            />
 
             {isOpen && (
               <div className="min-w-0 flex-1">

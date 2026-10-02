@@ -11,6 +11,7 @@ export const portfolioData: PortfolioData = {
     github: 'https://github.com/MrYharon',
     linkedin: 'https://www.linkedin.com/in/hugh-daeniel-dela-pe%C3%B1a-a68631431/',
     email: 'hughdaenielfdelapena@gmail.com',
+    avatarUrl: '/profile.png',
   },
   projects: [
     {
