@@ -1,5 +1,4 @@
-import React from 'react';
-import { ArrowDown, Bot, Mail, Sparkles, MapPin, Terminal } from 'lucide-react';
+import { ArrowDown, Mail, Sparkles, MapPin, Terminal } from 'lucide-react';
 import type { PortfolioData } from '../types/portfolio';
 import { LinkedinIcon, GithubIcon } from './Icons';
 
@@ -10,31 +9,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ personal, onExploreProjects }) => {
   return (
-    <section id="hero" className="pt-6 pb-12 sm:pb-16 border-b border-[#20232a]">
-      {/* Antigravity / Gemini Workspace prompt greeting banner */}
-      <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-indigo-950/40 via-purple-950/20 to-slate-900/60 border border-indigo-500/30 shadow-lg relative overflow-hidden">
-        <div className="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
-        <div className="flex items-start gap-3.5">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center shrink-0 mt-0.5">
-            <Bot className="w-4 h-4 text-indigo-400" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-mono text-indigo-300 font-semibold uppercase tracking-wider">
-                System Prompt / Workspace Initialized
-              </span>
-              <span className="text-[10px] bg-indigo-500/20 text-indigo-400 px-2 py-0.5 rounded-full font-mono">
-                v2.0
-              </span>
-            </div>
-            <p className="mt-1 text-sm text-slate-300 leading-relaxed">
-              Welcome to my portfolio. You can navigate the table of contents on the left, click any project to jump
-              directly to it, or interact with the AI assistant below to query my resume and technical experience.
-            </p>
-          </div>
-        </div>
-      </div>
-
+    <section id="hero" className="pt-8 pb-12 sm:pb-16 border-b border-[#20232a]">
       {/* Main Profile Info */}
       <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
         {/* Profile Picture / Avatar */}

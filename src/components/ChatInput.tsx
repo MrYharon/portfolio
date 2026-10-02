@@ -98,7 +98,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
                 <Bot className="w-3.5 h-3.5 text-indigo-400" />
               </div>
               <span className="text-xs font-semibold text-slate-200 font-mono">
-                Hugh's AI Agent <span className="text-[10px] text-emerald-400 font-mono">● Online</span>
+                Portfolio Assistant <span className="text-[10px] text-emerald-400 font-mono">● Online</span>
               </span>
             </div>
             <button
@@ -149,7 +149,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse delay-150" />
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse delay-300" />
-                <span className="text-[11px]">Agent thinking...</span>
+                <span className="text-[11px]">Searching portfolio...</span>
               </div>
             )}
           </div>
@@ -169,7 +169,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
         ))}
       </div>
 
-      {/* Prompt Input Bar (Antigravity & Gemini styling) */}
+      {/* Prompt Input Bar */}
       <div className="relative flex items-center bg-[#12141a]/95 backdrop-blur-xl border border-[#2b2f3d] focus-within:border-indigo-500/80 focus-within:ring-2 focus-within:ring-indigo-500/20 rounded-2xl p-1.5 shadow-2xl transition-all">
         <button
           type="button"
@@ -195,7 +195,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
 
         <div className="flex items-center gap-1.5 shrink-0 pr-1">
           <div className="hidden sm:flex items-center gap-1 text-[10px] font-mono text-slate-400 px-2 py-1 rounded bg-[#181a22] border border-[#252834]">
-            <span>Antigravity</span>
+            <span>Assistant</span>
           </div>
 
           <button

@@ -98,9 +98,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ personal }) => {
         <div className="mt-6 pt-5 border-t border-[#20232d] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400 font-mono">
           <div className="flex items-center gap-2">
             <Globe className="w-4 h-4 text-indigo-400" />
-            <span>Custom Domain Ready • Built with Vite, React & Tailwind CSS</span>
+            <span>Custom Domain Ready</span>
           </div>
-          <span className="text-slate-400">Designed with Antigravity AI UI</span>
+          <span className="text-slate-400">© {new Date().getFullYear()} Hugh</span>
         </div>
       </div>
     </section>

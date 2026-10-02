@@ -37,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onToggleSidebar }
         </button>
 
         <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-          <span className="text-slate-400 hidden sm:inline">hugh.workspace</span>
+          <span className="text-slate-400 hidden sm:inline">hugh.dev</span>
           <span className="text-slate-400 hidden sm:inline">/</span>
           <span className="text-indigo-400 font-semibold flex items-center gap-1.5 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">
             <Sparkles className="w-3 h-3 text-indigo-400" />

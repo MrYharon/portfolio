@@ -54,9 +54,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {isOpen && (
               <div className="min-w-0">
                 <h1 className="font-semibold text-sm text-slate-100 truncate tracking-wide flex items-center gap-1.5">
-                  Hugh.ai <span className="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-mono">PORTFOLIO</span>
+                  Hugh <span className="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-mono">PORTFOLIO</span>
                 </h1>
-                <p className="text-xs text-slate-400 truncate">AI Workspace & Showcase</p>
+                <p className="text-xs text-slate-400 truncate">Software Engineer</p>
               </div>
             )}
           </div>
@@ -223,7 +223,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> Active
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 truncate">AI Portfolio Agent</p>
+                <p className="text-[11px] text-slate-400 truncate">Software Engineer</p>
               </div>
             )}
           </div>
