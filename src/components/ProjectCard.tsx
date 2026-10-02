@@ -17,10 +17,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
       {/* Header & Badges */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-700">
+          <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-800">
             {project.category}
           </span>
-          <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-medium">
+          <span className="text-xs px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-700 font-medium">
             {project.status}
           </span>
         </div>
@@ -29,7 +29,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
         <div className="flex items-center gap-1.5">
           <button
             onClick={() => onAskAboutProject(project.title)}
-            className="flex items-center gap-1.5 text-xs text-gray-600 hover:text-gray-900 px-2.5 py-1.5 rounded-full hover:bg-gray-100 transition-colors"
+            className="flex items-center gap-1.5 text-xs text-gray-600 hover:text-black px-2.5 py-1.5 rounded-full hover:bg-gray-100 transition-colors"
             title="Ask about this project"
           >
             <MessageSquare className="w-3.5 h-3.5" />
@@ -41,7 +41,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
               href={project.githubUrl}
               target="_blank"
               rel="noreferrer"
-              className="p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-1.5 text-gray-600 hover:text-black hover:bg-gray-100 rounded-full transition-colors"
               title="GitHub"
             >
               <GithubIcon className="w-4 h-4" />
@@ -53,7 +53,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
               href={project.demoUrl}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-1 text-xs text-gray-700 hover:text-gray-900 px-2.5 py-1.5 rounded-full hover:bg-gray-100 transition-colors"
+              className="flex items-center gap-1 text-xs text-gray-700 hover:text-black px-2.5 py-1.5 rounded-full hover:bg-gray-100 transition-colors"
             >
               <span>Demo</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-gray-500" />
@@ -63,7 +63,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
       </div>
 
       {/* Project Title & Tagline */}
-      <h3 className="text-xl font-semibold text-gray-900">
+      <h3 className="text-xl font-semibold text-black">
         {project.title}
       </h3>
       <p className="mt-1 text-sm text-gray-600 leading-relaxed">
@@ -78,21 +78,21 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
       {/* Metrics */}
       {project.metrics && (
         <div className="mt-4 p-3 rounded-xl bg-gray-50 border border-gray-100 text-xs text-gray-700">
-          <span className="font-medium text-gray-900">Outcome:</span> {project.metrics}
+          <span className="font-semibold text-black">Outcome:</span> {project.metrics}
         </div>
       )}
 
       {/* Implementation Details */}
       <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* What I Did */}
-        <div className="p-4 rounded-xl bg-[#f8fafd] border border-[#e5e9f0]">
+        <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
           <h4 className="text-xs font-semibold text-gray-800 uppercase tracking-wider mb-2.5">
             Key Contributions
           </h4>
           <ul className="space-y-1.5">
             {project.whatIDid.map((item, idx) => (
               <li key={idx} className="text-xs text-gray-600 flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
+                <span className="w-1.5 h-1.5 rounded-full bg-black mt-1.5 shrink-0" />
                 <span className="leading-relaxed">{item}</span>
               </li>
             ))}
@@ -100,14 +100,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
         </div>
 
         {/* Generative AI Elements */}
-        <div className="p-4 rounded-xl bg-[#f8fafd] border border-[#e5e9f0]">
+        <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
           <h4 className="text-xs font-semibold text-gray-800 uppercase tracking-wider mb-2.5">
             AI & Engineering Decisions
           </h4>
           <ul className="space-y-1.5">
             {project.generativeAiAspects.map((item, idx) => (
               <li key={idx} className="text-xs text-gray-600 flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 shrink-0" />
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-600 mt-1.5 shrink-0" />
                 <span className="leading-relaxed">{item}</span>
               </li>
             ))}
@@ -121,7 +121,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
         {project.techStack.map((tech) => (
           <span
             key={tech}
-            className="text-xs px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-600"
+            className="text-xs px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-700"
           >
             {tech}
           </span>

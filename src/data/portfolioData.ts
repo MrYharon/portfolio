@@ -8,7 +8,7 @@ export const portfolioData: PortfolioData = {
     avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
     bio: 'I build intelligent systems, autonomous agents, and production-grade Generative AI applications. Bridging advanced LLM reasoning with seamless user experiences to solve real-world problems.',
     location: 'Open to Remote / Global Opportunities',
-    availability: 'Open to Work • Full-time & High-impact Contracts',
+    availability: 'Available for full-time engineering roles',
     linkedin: 'https://linkedin.com/in/yourprofile',
     github: 'https://github.com/MrYharon',
     email: 'contact@yourdomain.com',

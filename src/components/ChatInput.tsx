@@ -24,7 +24,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
     {
       role: 'assistant',
       content:
-        `Hello! You can ask me anything about Hugh's projects, technical background, skills, or how to get in touch.`,
+        `Hello! You can ask me anything about Hugh's projects, background, skills, or how to get in touch.`,
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
@@ -86,16 +86,16 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
 
   return (
     <div className="sticky bottom-4 z-40 px-4 sm:px-8 max-w-3xl mx-auto w-full">
-      {/* Response Drawer */}
+      {/* Response Popover */}
       {isOpen && (
         <div className="mb-3 p-4 sm:p-5 rounded-2xl bg-white border border-gray-200 shadow-xl">
           <div className="flex items-center justify-between pb-2.5 border-b border-gray-100 mb-3">
-            <span className="text-xs font-medium text-gray-700">
+            <span className="text-xs font-semibold text-black">
               Assistant
             </span>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-1 text-gray-500 hover:text-black hover:bg-gray-100 rounded-full transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -110,8 +110,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
                 <div
                   className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed ${
                     m.role === 'user'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-50 text-gray-800 border border-gray-100'
+                      ? 'bg-black text-white'
+                      : 'bg-gray-100 text-black border border-gray-200'
                   }`}
                 >
                   <p>{m.content}</p>
@@ -121,7 +121,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
                         onNavigate(m.action!.sectionId);
                         setIsOpen(false);
                       }}
-                      className="mt-2 flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-700"
+                      className="mt-2 flex items-center gap-1.5 text-xs font-medium text-black hover:underline"
                     >
                       <span>{m.action.label}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -139,22 +139,22 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
         </div>
       )}
 
-      {/* Gemini Suggestion Pills */}
+      {/* Suggestion Pills */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
         {quickPrompts.map((item, idx) => (
           <button
             key={idx}
             onClick={() => handleSendPrompt(item.prompt)}
-            className="shrink-0 text-xs px-3.5 py-1.5 rounded-full bg-[#f0f4f9] hover:bg-[#dde3ea] text-gray-700 transition-colors"
+            className="shrink-0 text-xs px-3.5 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-colors"
           >
             {item.label}
           </button>
         ))}
       </div>
 
-      {/* Gemini Style Input Capsule */}
-      <div className="relative flex items-center bg-[#f0f4f9] focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-500/20 border border-transparent focus-within:border-gray-300 rounded-full px-4 py-2 transition-all shadow-sm">
-        <Sparkles className="w-4 h-4 text-blue-600 shrink-0 mr-2" />
+      {/* Minimalist Input Capsule */}
+      <div className="relative flex items-center bg-white border border-gray-200 focus-within:border-black rounded-full px-4 py-2 transition-all shadow-sm">
+        <Sparkles className="w-4 h-4 text-gray-500 shrink-0 mr-2" />
 
         <input
           type="text"
@@ -166,13 +166,13 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
             }
           }}
           placeholder="Ask anything about Hugh..."
-          className="w-full bg-transparent text-sm text-gray-800 placeholder-gray-500 focus:outline-none"
+          className="w-full bg-transparent text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
         />
 
         <button
           onClick={() => handleSendPrompt()}
           disabled={!input.trim()}
-          className="p-1.5 rounded-full text-blue-600 hover:bg-blue-50 disabled:text-gray-400 disabled:hover:bg-transparent transition-colors ml-1"
+          className="p-1.5 rounded-full text-black hover:bg-gray-100 disabled:text-gray-300 disabled:hover:bg-transparent transition-colors ml-1"
           title="Send"
         >
           <Send className="w-4 h-4" />

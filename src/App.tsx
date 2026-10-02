@@ -59,7 +59,7 @@ export function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen bg-white text-gray-900 flex flex-col font-sans selection:bg-gray-200 selection:text-black">
       {/* Gemini Style Sidebar */}
       <Sidebar
         projects={portfolioData.projects}
@@ -71,7 +71,7 @@ export function App() {
 
       {/* Main Content Area */}
       <div
-        className={`flex-1 flex flex-col min-w-0 transition-all duration-200 ease-in-out ${
+        className={`flex-1 flex flex-col min-w-0 transition-all duration-200 ease-in-out relative ${
           sidebarOpen ? 'lg:pl-68' : 'lg:pl-18'
         }`}
       >
@@ -81,8 +81,8 @@ export function App() {
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         />
 
-        {/* Content Stream */}
-        <main className="flex-1 px-4 sm:px-8 lg:px-12 max-w-4xl w-full mx-auto pb-28">
+        {/* Content Stream with generous bottom padding */}
+        <main className="flex-1 px-4 sm:px-8 lg:px-12 max-w-4xl w-full mx-auto pb-56">
           {/* Hero Section */}
           <Hero
             personal={portfolioData.personal}
@@ -98,7 +98,7 @@ export function App() {
           {/* Featured Projects Section */}
           <section id="projects" className="py-12 border-b border-gray-100">
             <div className="mb-6">
-              <h2 className="text-xl font-semibold text-gray-900 tracking-tight">
+              <h2 className="text-xl font-semibold text-black tracking-tight">
                 Featured Projects
               </h2>
               <p className="text-sm text-gray-500 mt-1">
@@ -124,6 +124,9 @@ export function App() {
           {/* Contact Section */}
           <ContactSection personal={portfolioData.personal} />
         </main>
+
+        {/* Soft bottom fade-out gradient so scrolling content smoothly fades behind prompt bar */}
+        <div className="pointer-events-none fixed bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white via-white/80 to-transparent z-30" />
 
         {/* Gemini Style Bottom Prompt Bar */}
         <ChatInput

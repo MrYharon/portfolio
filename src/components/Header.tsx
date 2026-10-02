@@ -49,13 +49,13 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onToggleSidebar }
           rel="noreferrer"
           className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
         >
-          <LinkedinIcon className="w-3.5 h-3.5 text-[#0a66c2]" />
+          <LinkedinIcon className="w-3.5 h-3.5 text-gray-800" />
           <span>LinkedIn</span>
         </a>
 
         <a
           href="#contact"
-          className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-full transition-colors"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium text-white bg-black hover:bg-gray-800 rounded-full transition-colors"
         >
           <FileText className="w-3.5 h-3.5" />
           <span>Resume</span>

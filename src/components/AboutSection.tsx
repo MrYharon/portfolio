@@ -8,7 +8,7 @@ interface AboutSectionProps {
 export const AboutSection: React.FC<AboutSectionProps> = ({ personal }) => {
   return (
     <section id="about" className="py-12 border-b border-gray-100 scroll-mt-16">
-      <h2 className="text-xl font-semibold text-gray-900 tracking-tight mb-4">
+      <h2 className="text-xl font-semibold text-black tracking-tight mb-4">
         About
       </h2>
 
@@ -32,11 +32,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ personal }) => {
           </div>
           <div>
             <span className="text-gray-400 block font-medium">Focus</span>
-            <span className="text-gray-800 font-medium">AI & Full-Stack Engineering</span>
+            <span className="text-gray-800 font-medium">Full-Stack & Generative AI</span>
           </div>
           <div>
-            <span className="text-gray-400 block font-medium">Status</span>
-            <span className="text-green-700 font-medium">{personal.availability}</span>
+            <span className="text-gray-400 block font-medium">Availability</span>
+            <span className="text-gray-800 font-medium">Open to opportunities</span>
           </div>
         </div>
       </div>
