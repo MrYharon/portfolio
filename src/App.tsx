@@ -65,6 +65,7 @@ export function App() {
         onNavigate={handleNavigate}
         isOpen={sidebarOpen}
         onToggle={() => setSidebarOpen(!sidebarOpen)}
+        linkedinUrl={portfolioData.personal.linkedin}
       />
 
       {/* Main Content Area */}
@@ -77,6 +78,7 @@ export function App() {
         <Header
           activeSection={activeSection}
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+          linkedinUrl={portfolioData.personal.linkedin}
         />
 
         {/* Content Stream with generous bottom padding */}

@@ -5,9 +5,14 @@ import { LinkedinIcon, GithubIcon } from './Icons';
 interface HeaderProps {
   activeSection: string;
   onToggleSidebar: () => void;
+  linkedinUrl?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeSection, onToggleSidebar }) => {
+export const Header: React.FC<HeaderProps> = ({
+  activeSection,
+  onToggleSidebar,
+  linkedinUrl = 'https://linkedin.com',
+}) => {
   const getSectionTitle = (id: string) => {
     switch (id) {
       case 'hero':
@@ -52,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onToggleSidebar }
         </a>
 
         <a
-          href="https://linkedin.com"
+          href={linkedinUrl}
           target="_blank"
           rel="noreferrer"
           className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-neutral-600 hover:text-black hover:bg-neutral-100 rounded-full transition-colors"

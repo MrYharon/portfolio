@@ -2,15 +2,15 @@ import type { PortfolioData } from '../types/portfolio';
 
 export const portfolioData: PortfolioData = {
   personal: {
-    name: 'Hugh',
+    name: 'Hugh Daeniel Dela Peña',
     headline: 'Software Engineer & Builder documenting projects and experiments',
     role: 'Software Engineer',
     bio: 'Welcome to my digital journal and project log. Here I document tools, browser extensions, and web systems I build.',
     blogIntro:
       'I build practical developer tools, browser extensions, and modern web applications. Focusing on high-performance interfaces, minimal design, and thoughtful engineering.',
     github: 'https://github.com/MrYharon',
-    linkedin: 'https://linkedin.com',
-    email: 'contact@hugh.dev',
+    linkedin: 'https://www.linkedin.com/in/hugh-daeniel-dela-pe%C3%B1a-a68631431/',
+    email: 'hughdaenielfdelapena@gmail.com',
   },
   projects: [
     {

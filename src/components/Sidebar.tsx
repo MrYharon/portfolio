@@ -17,6 +17,7 @@ interface SidebarProps {
   onNavigate: (sectionId: string) => void;
   isOpen: boolean;
   onToggle: () => void;
+  linkedinUrl?: string;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -25,6 +26,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onNavigate,
   isOpen,
   onToggle,
+  linkedinUrl = 'https://linkedin.com',
 }) => {
   return (
     <>
@@ -204,7 +206,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <GithubIcon className="w-3.5 h-3.5" />
               </a>
               <a
-                href="https://linkedin.com"
+                href={linkedinUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="p-1 hover:text-black hover:bg-neutral-100 rounded-lg transition-colors"
