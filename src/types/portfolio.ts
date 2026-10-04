@@ -10,6 +10,8 @@ export interface Project {
   demoUrl?: string;
   githubUrl?: string;
   quickCommand?: string;
+  imageUrl?: string;
+  imageCaption?: string;
   status: 'Active' | 'Shipped' | 'In Progress';
 }
 
@@ -28,6 +30,8 @@ export interface BlogPost {
   date: string;
   readTime: string;
   excerpt: string;
+  coverImage?: string;
+  coverCaption?: string;
   content: string[];
   tags: string[];
 }

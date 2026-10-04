@@ -31,36 +31,50 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ posts, onSelectPost })
             onClick={() => onSelectPost(post)}
             className="group py-5 cursor-pointer flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 transition-colors hover:bg-neutral-50/70 rounded-2xl px-4 -mx-4"
           >
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[11px] font-mono text-neutral-400">
-                  {post.date}
-                </span>
-                <span className="text-neutral-300">•</span>
-                <span className="text-[11px] font-mono text-neutral-400">
-                  {post.readTime}
-                </span>
-              </div>
-
-              <h3 className="text-base font-medium text-neutral-900 group-hover:text-black flex items-center gap-1.5 transition-colors">
-                <span>{post.title}</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
-              </h3>
-
-              <p className="text-sm text-neutral-500 mt-1.5 line-clamp-2 leading-relaxed">
-                {post.excerpt}
-              </p>
-
-              <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-600 border border-neutral-200/50"
-                  >
-                    #{tag.toLowerCase().replace(/\s+/g, '')}
+            <div className="flex items-start justify-between gap-4 w-full">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-[11px] font-mono text-neutral-400">
+                    {post.date}
                   </span>
-                ))}
+                  <span className="text-neutral-300">•</span>
+                  <span className="text-[11px] font-mono text-neutral-400">
+                    {post.readTime}
+                  </span>
+                </div>
+
+                <h3 className="text-base font-medium text-neutral-900 group-hover:text-black flex items-center gap-1.5 transition-colors">
+                  <span>{post.title}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
+                </h3>
+
+                <p className="text-sm text-neutral-500 mt-1.5 line-clamp-2 leading-relaxed">
+                  {post.excerpt}
+                </p>
+
+                <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-600 border border-neutral-200/50"
+                    >
+                      #{tag.toLowerCase().replace(/\s+/g, '')}
+                    </span>
+                  ))}
+                </div>
               </div>
+
+              {/* Optional Cover Thumbnail */}
+              {post.coverImage && (
+                <div className="w-20 h-20 sm:w-24 sm:h-20 rounded-xl overflow-hidden border border-neutral-200 shrink-0 bg-neutral-100 hidden sm:block group-hover:border-neutral-400 transition-colors">
+                  <img
+                    src={post.coverImage}
+                    alt={post.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              )}
             </div>
           </article>
         ))}

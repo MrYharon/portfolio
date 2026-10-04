@@ -96,15 +96,57 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
             ))}
           </div>
 
+          {/* Cover Image if present */}
+          {post.coverImage && (
+            <figure className="rounded-2xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-xs">
+              <img
+                src={post.coverImage}
+                alt={post.title}
+                className="w-full max-h-80 object-cover"
+                loading="lazy"
+              />
+              {post.coverCaption && (
+                <figcaption className="px-4 py-2.5 text-center text-xs font-mono text-neutral-500 bg-neutral-50 border-t border-neutral-100">
+                  {post.coverCaption}
+                </figcaption>
+              )}
+            </figure>
+          )}
+
           <div className="h-[1px] w-full bg-neutral-100 my-2" />
 
-          {/* Paragraphs */}
+          {/* Paragraphs and Inline Photos */}
           <div className="space-y-4 text-sm sm:text-base text-neutral-700 leading-relaxed font-sans">
-            {post.content.map((paragraph, idx) => (
-              <p key={idx} className="leading-relaxed">
-                {paragraph}
-              </p>
-            ))}
+            {post.content.map((block, idx) => {
+              // Support inline image syntax: "image: /blog/photo.png | Caption text"
+              if (block.startsWith('image:')) {
+                const parts = block.replace('image:', '').split('|');
+                const imgUrl = parts[0].trim();
+                const caption = parts[1] ? parts[1].trim() : '';
+
+                return (
+                  <figure key={idx} className="my-6 rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-xs">
+                    <img
+                      src={imgUrl}
+                      alt={caption || post.title}
+                      className="w-full object-cover max-h-96"
+                      loading="lazy"
+                    />
+                    {caption && (
+                      <figcaption className="px-4 py-2 text-center text-xs font-mono text-neutral-500 bg-neutral-50 border-t border-neutral-100">
+                        {caption}
+                      </figcaption>
+                    )}
+                  </figure>
+                );
+              }
+
+              return (
+                <p key={idx} className="leading-relaxed">
+                  {block}
+                </p>
+              );
+            })}
           </div>
 
           {/* Article Footer Note */}

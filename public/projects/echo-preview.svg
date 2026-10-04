@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="100%" height="100%">
+  <rect width="100%" height="100%" fill="#171717" rx="16"/>
+  <!-- Subtle border & grid -->
+  <rect x="2" y="2" width="796" height="396" fill="none" stroke="#262626" stroke-width="2" rx="14"/>
+  
+  <!-- Window Header -->
+  <circle cx="36" cy="32" r="6" fill="#404040"/>
+  <circle cx="56" cy="32" r="6" fill="#333333"/>
+  <circle cx="76" cy="32" r="6" fill="#333333"/>
+  <text x="400" y="36" fill="#737373" font-family="monospace" font-size="12" text-anchor="middle">ChatGPT / Claude / Gemini — Echo Prompt Coach</text>
+
+  <!-- Simulated Input Box -->
+  <rect x="40" y="70" width="720" height="280" rx="12" fill="#0d0d0d" stroke="#262626" stroke-width="1.5"/>
+  <text x="70" y="120" fill="#a3a3a3" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="15">
+    Draft a cold outreach email to open-source maintainers...
+  </text>
+
+  <!-- Floating Echo Capsule -->
+  <g transform="translate(480, 240)">
+    <rect width="250" height="80" rx="14" fill="#1f1f1f" stroke="#404040" stroke-width="1.5" filter="drop-shadow(0 10px 20px rgba(0,0,0,0.5))"/>
+    
+    <!-- Score Badge -->
+    <rect x="16" y="16" width="48" height="48" rx="10" fill="#000000" stroke="#333333" stroke-width="1"/>
+    <text x="40" y="46" fill="#ffffff" font-family="monospace" font-size="18" font-weight="bold" text-anchor="middle">94</text>
+    
+    <!-- Status & Shortcut text -->
+    <text x="76" y="38" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="13" font-weight="600">Prompt Quality: Optimal</text>
+    <text x="76" y="56" fill="#737373" font-family="monospace" font-size="11">Alt+E to auto-enhance</text>
+  </g>
+</svg>

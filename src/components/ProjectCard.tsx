@@ -133,6 +133,23 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
         {/* Tab 1: Overview */}
         {activeTab === 'overview' && (
           <div className="animate-in fade-in duration-150 space-y-3">
+            {/* Optional Project Mockup / Screenshot Preview */}
+            {project.imageUrl && (
+              <figure className="rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-xs mb-3">
+                <img
+                  src={project.imageUrl}
+                  alt={project.title}
+                  className="w-full max-h-64 object-cover"
+                  loading="lazy"
+                />
+                {project.imageCaption && (
+                  <figcaption className="px-3 py-1.5 text-center text-[11px] font-mono text-neutral-400 bg-neutral-50 border-t border-neutral-100">
+                    {project.imageCaption}
+                  </figcaption>
+                )}
+              </figure>
+            )}
+
             <p className="text-sm text-neutral-600 leading-relaxed">
               {project.overview}
             </p>
