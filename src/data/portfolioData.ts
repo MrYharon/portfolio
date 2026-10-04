@@ -31,6 +31,7 @@ export const portfolioData: PortfolioData = {
       metrics: 'Zero-latency local evaluation running 100% in-browser',
       demoUrl: 'https://github.com/MrYharon/Echo#installation',
       githubUrl: 'https://github.com/MrYharon/Echo',
+      quickCommand: 'git clone https://github.com/MrYharon/Echo.git',
       status: 'Active',
     },
     {
@@ -50,6 +51,7 @@ export const portfolioData: PortfolioData = {
       metrics: 'Real-time velocity scoring across hundreds of GitHub repos daily',
       demoUrl: 'https://github.com/MrYharon/CodeScout',
       githubUrl: 'https://github.com/MrYharon/CodeScout',
+      quickCommand: 'git clone https://github.com/MrYharon/CodeScout.git',
       status: 'Active',
     },
     {
@@ -68,6 +70,7 @@ export const portfolioData: PortfolioData = {
       metrics: 'Reclaims gigabytes of clutter in seconds with zero dependencies',
       demoUrl: 'https://github.com/MrYharon/C-Drive-Cleaner',
       githubUrl: 'https://github.com/MrYharon/C-Drive-Cleaner',
+      quickCommand: 'git clone https://github.com/MrYharon/C-Drive-Cleaner.git',
       status: 'Shipped',
     },
   ],

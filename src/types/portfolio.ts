@@ -9,6 +9,7 @@ export interface Project {
   metrics?: string;
   demoUrl?: string;
   githubUrl?: string;
+  quickCommand?: string;
   status: 'Active' | 'Shipped' | 'In Progress';
 }
 
