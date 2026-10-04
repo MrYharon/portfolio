@@ -32,8 +32,6 @@ export const portfolioData: PortfolioData = {
       demoUrl: 'https://github.com/MrYharon/Echo#installation',
       githubUrl: 'https://github.com/MrYharon/Echo',
       quickCommand: 'git clone https://github.com/MrYharon/Echo.git',
-      imageUrl: '/projects/echo-preview.svg',
-      imageCaption: 'Real-time floating prompt evaluation capsule inside ChatGPT / Claude',
       status: 'Active',
     },
     {
@@ -205,14 +203,10 @@ export const portfolioData: PortfolioData = {
       readTime: '3 min read',
       excerpt:
         'Most AI writing assistants send every keystroke to a remote server. Here is why I chose local regex rules and DOM observers for zero latency and complete privacy.',
-      coverImage: '/blog/echo-architecture.svg',
-      coverCaption: 'Zero-latency local client-side evaluation architecture',
       content: [
         'When writing prompts in ChatGPT, Claude, and Gemini every day, you notice that the biggest friction is not a lack of creativity—it is waiting for an assistant to analyze your input. Most extensions make an external API request, adding 300ms to 1s of latency before showing a suggestion.',
         'For Echo, I set a strict design rule: zero network calls during prompt evaluation. Everything runs client-side inside the Chrome Manifest V3 content script.',
-        'image: /blog/echo-architecture.svg | Chrome Manifest V3 local DOM observation pipeline',
         'By using dynamic DOM mutation observers and a lightweight rule engine that scores action verbs, output format constraints, and ambiguity, Echo provides instantaneous feedback as you type, and auto-corrects weak phrasing with Alt+E.',
-        'image: /projects/echo-preview.svg | Live floating capsule rendering prompt quality metrics',
         'The takeaway: local computation is often 10x more delightful than another round-trip to an LLM.',
       ],
       tags: ['Chrome MV3', 'JavaScript', 'Privacy', 'Performance'],
