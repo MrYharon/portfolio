@@ -4,7 +4,6 @@ import {
   Plus,
   Bookmark,
   User,
-  Cpu,
   Mail,
   PanelLeftClose,
 } from 'lucide-react';
@@ -109,19 +108,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
               >
                 <User className="w-4 h-4 shrink-0 text-neutral-500" />
                 {isOpen && <span className="truncate">About</span>}
-              </button>
-
-              <button
-                onClick={() => onNavigate('skills')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-colors ${
-                  activeSection === 'skills'
-                    ? 'bg-neutral-100 text-black font-semibold'
-                    : 'text-neutral-600 hover:bg-neutral-50 hover:text-black'
-                } ${!isOpen ? 'justify-center px-0' : ''}`}
-                title="Stack"
-              >
-                <Cpu className="w-4 h-4 shrink-0 text-neutral-500" />
-                {isOpen && <span className="truncate">Stack & Tools</span>}
               </button>
             </div>
           </div>

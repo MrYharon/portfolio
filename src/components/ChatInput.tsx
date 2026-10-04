@@ -72,8 +72,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
         reply = `You can connect with Hugh via GitHub (${portfolioData.personal.github}), LinkedIn (${portfolioData.personal.linkedin}), or email (${portfolioData.personal.email}).`;
         action = { label: 'Go to contact', sectionId: 'contact' };
       } else if (lower.includes('skill') || lower.includes('tech') || lower.includes('stack')) {
-        reply = `Hugh works with TypeScript, JavaScript, Python, React, Next.js, FastAPI, Node.js, and Chrome MV3 browser extensions.`;
-        action = { label: 'View stack', sectionId: 'skills' };
+        reply = `Hugh builds with TypeScript, JavaScript, Python, React, Next.js, FastAPI, Node.js, and Chrome MV3 browser extensions across his projects.`;
+        action = { label: 'View projects', sectionId: 'projects' };
       } else {
         reply = `Hugh is a software engineer building practical developer tools, browser extensions, and web applications.`;
         action = { label: 'View about', sectionId: 'about' };

@@ -14,9 +14,11 @@ export interface Project {
 
 export interface TechSkill {
   name: string;
-  category: 'Frontend' | 'Backend' | 'Languages' | 'Tools';
+  category: 'Languages' | 'Frontend' | 'Backend' | 'Tools';
   description: string;
   slug: string;
+  projectId?: string;
+  projectTitle?: string;
 }
 
 export interface PortfolioData {

@@ -19,8 +19,6 @@ export const Header: React.FC<HeaderProps> = ({
         return 'Overview';
       case 'about':
         return 'About';
-      case 'skills':
-        return 'Stack';
       case 'contact':
         return 'Contact';
       default:

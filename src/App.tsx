@@ -3,7 +3,6 @@ import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
-import { InteractiveSkills } from './components/InteractiveSkills';
 import { ProjectCard } from './components/ProjectCard';
 import { ContactSection } from './components/ContactSection';
 import { ChatInput } from './components/ChatInput';
@@ -32,7 +31,6 @@ export function App() {
     const sectionIds = [
       'hero',
       'about',
-      'skills',
       ...portfolioData.projects.map((p) => p.id),
       'contact',
     ];
@@ -91,9 +89,6 @@ export function App() {
 
           {/* About & Philosophy */}
           <AboutSection />
-
-          {/* Interactive Skills with Real Vector Icons & Detail Inspector */}
-          <InteractiveSkills skills={portfolioData.skills} />
 
           {/* Featured Projects Section */}
           <section id="projects" className="py-12 border-b border-neutral-100">
