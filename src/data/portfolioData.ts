@@ -195,4 +195,49 @@ export const portfolioData: PortfolioData = {
       description: 'Containerized environments ensuring reproducible execution across development and cloud.',
     },
   ],
+  posts: [
+    {
+      id: 'building-echo-local-manifest-v3',
+      title: 'Why I Built Echo with 100% Local Heuristics Instead of an LLM API',
+      date: 'Oct 2026',
+      readTime: '3 min read',
+      excerpt:
+        'Most AI writing assistants send every keystroke to a remote server. Here is why I chose local regex rules and DOM observers for zero latency and complete privacy.',
+      content: [
+        'When writing prompts in ChatGPT, Claude, and Gemini every day, you notice that the biggest friction is not a lack of creativity—it is waiting for an assistant to analyze your input. Most extensions make an external API request, adding 300ms to 1s of latency before showing a suggestion.',
+        'For Echo, I set a strict design rule: zero network calls during prompt evaluation. Everything runs client-side inside the Chrome Manifest V3 content script.',
+        'By using dynamic DOM mutation observers and a lightweight rule engine that scores action verbs, output format constraints, and ambiguity, Echo provides instantaneous feedback as you type, and auto-corrects weak phrasing with Alt+E.',
+        'The takeaway: local computation is often 10x more delightful than another round-trip to an LLM.',
+      ],
+      tags: ['Chrome MV3', 'JavaScript', 'Privacy', 'Performance'],
+    },
+    {
+      id: 'tracking-github-star-velocity',
+      title: 'Tracking Real Open-Source Velocity Beyond Vanity Star Counts',
+      date: 'Sep 2026',
+      readTime: '4 min read',
+      excerpt:
+        'Total GitHub stars tell you what was popular in the past; star velocity tells you what is breaking out right now. How CodeScout ranks daily trending repos with FastAPI and SSE.',
+      content: [
+        'A repository with 50,000 stars might be completely dormant, while a new tool with 200 stars might be gaining 50 stars an hour. To find real trending projects, total stars are the wrong metric.',
+        'In CodeScout, I built an algorithm that tracks the derivative of stars over 24-hour and 7-day windows using the GitHub Search API. This surfaces high-momentum tools early.',
+        'To make the brainstorming coach feel immediate, I implemented Server-Sent Events (SSE) in FastAPI. Rather than waiting for a complete AI response block, the frontend receives tokens in a live stream directly into the browser.',
+      ],
+      tags: ['Python', 'FastAPI', 'Next.js', 'SSE'],
+    },
+    {
+      id: 'zen-of-minimalist-software',
+      title: 'Building 60-Line Utilities That Do One Thing Well',
+      date: 'Aug 2026',
+      readTime: '2 min read',
+      excerpt:
+        'Why a clean Python CLI script with zero dependencies often beats bloated desktop cleaner applications.',
+      content: [
+        'Commercial disk cleaner apps are notorious for bundled bloatware, background telemetry, and subscription popups just to delete cached files.',
+        'C-Drive Cleaner was born out of wanting a predictable, transparent script. Under 60 lines of standard-library Python, it recursively scans user temp, CrashDumps, and thumbnail caches, calculates exact reclaimable bytes, and asks for confirmation before purging.',
+        'Building small, focused utilities with zero external dependencies reminds me why software engineering is fun: simple code that respects the user just works.',
+      ],
+      tags: ['Python', 'CLI', 'Clean Code'],
+    },
+  ],
 };

@@ -22,6 +22,16 @@ export interface TechSkill {
   projectTitle?: string;
 }
 
+export interface BlogPost {
+  id: string;
+  title: string;
+  date: string;
+  readTime: string;
+  excerpt: string;
+  content: string[];
+  tags: string[];
+}
+
 export interface PortfolioData {
   personal: {
     name: string;
@@ -36,4 +46,5 @@ export interface PortfolioData {
   };
   projects: Project[];
   skills: TechSkill[];
+  posts: BlogPost[];
 }

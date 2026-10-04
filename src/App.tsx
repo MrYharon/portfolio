@@ -3,15 +3,19 @@ import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
+import { BlogSection } from './components/BlogSection';
+import { BlogReaderModal } from './components/BlogReaderModal';
 import { ProjectCard } from './components/ProjectCard';
 import { ContactSection } from './components/ContactSection';
 import { ChatInput } from './components/ChatInput';
 import { portfolioData } from './data/portfolioData';
+import type { BlogPost } from './types/portfolio';
 
 export function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [chatInitialPrompt, setChatInitialPrompt] = useState('');
+  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
   // Smooth scroll handler
   const handleNavigate = (id: string) => {
@@ -31,6 +35,7 @@ export function App() {
     const sectionIds = [
       'hero',
       'about',
+      'writing',
       ...portfolioData.projects.map((p) => p.id),
       'contact',
     ];
@@ -90,6 +95,12 @@ export function App() {
           {/* About & Philosophy */}
           <AboutSection />
 
+          {/* Writing & Journal Section */}
+          <BlogSection
+            posts={portfolioData.posts}
+            onSelectPost={(post) => setSelectedPost(post)}
+          />
+
           {/* Featured Projects Section */}
           <section id="projects" className="py-12 border-b border-neutral-100">
             <div className="mb-6">
@@ -127,6 +138,12 @@ export function App() {
           initialPrompt={chatInitialPrompt}
         />
       </div>
+
+      {/* Reader Modal for Full Articles */}
+      <BlogReaderModal
+        post={selectedPost}
+        onClose={() => setSelectedPost(null)}
+      />
     </div>
   );
 }
