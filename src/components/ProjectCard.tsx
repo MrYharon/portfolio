@@ -29,14 +29,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
   return (
     <article
       id={project.id}
-      className="scroll-mt-20 p-6 sm:p-7 rounded-2xl bg-white border border-neutral-200 transition-all duration-200 hover:border-neutral-400 hover:shadow-xs group"
+      className="scroll-mt-20 p-6 sm:p-7 rounded-2xl bg-white border border-neutral-200 transition-all duration-200 hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-md group"
     >
       {/* Header & Badges */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2">
           {/* Minimal monochrome status badge */}
           <span className="inline-flex items-center text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-800 border border-neutral-200">
-            <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 mr-1.5 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-gentle-pulse" />
             {project.status}
           </span>
           <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-neutral-50 text-neutral-600 border border-neutral-200/60">
@@ -48,7 +48,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
         <div className="flex items-center gap-1.5">
           <button
             onClick={() => onAskAboutProject(project.title)}
-            className="flex items-center gap-1.5 text-xs text-neutral-600 hover:text-black px-2.5 py-1.5 rounded-xl hover:bg-neutral-100 transition-colors"
+            className="flex items-center gap-1.5 text-xs text-neutral-600 hover:text-black px-2.5 py-1.5 rounded-xl hover:bg-neutral-100 press-scale"
             title="Ask AI about this project"
           >
             <MessageSquare className="w-3.5 h-3.5" />
@@ -60,7 +60,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
               href={project.githubUrl}
               target="_blank"
               rel="noreferrer"
-              className="group/btn flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 hover:border-neutral-400 text-xs font-medium text-neutral-800 transition-all duration-150 shadow-xs"
+              className="group/btn flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 hover:border-neutral-400 text-xs font-medium text-neutral-800 transition-all duration-150 press-scale shadow-2xs"
               title="GitHub repository"
             >
               <GithubIcon className="w-3.5 h-3.5" />
@@ -74,7 +74,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
               href={project.demoUrl}
               target="_blank"
               rel="noreferrer"
-              className="group/btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-medium transition-all duration-150 shadow-xs"
+              className="group/btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-medium transition-all duration-150 press-scale shadow-2xs"
             >
               <span>Visit</span>
               <ArrowUpRight className="w-3 h-3 text-neutral-400 transition-transform duration-150 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 group-hover/btn:text-white" />
@@ -91,13 +91,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
         {project.tagline}
       </p>
 
-      {/* Interactive Tabs Navigation */}
+      {/* Interactive Tabs Navigation with smooth active indicators */}
       <div className="mt-5 flex items-center gap-1 p-1 bg-neutral-100/80 rounded-xl w-fit text-xs font-medium border border-neutral-200/50">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`px-3 py-1.5 rounded-lg transition-all duration-150 ${
+          className={`px-3 py-1.5 rounded-lg transition-all duration-150 press-scale ${
             activeTab === 'overview'
-              ? 'bg-white text-black shadow-xs font-semibold'
+              ? 'bg-white text-black shadow-2xs font-semibold'
               : 'text-neutral-500 hover:text-black'
           }`}
         >
@@ -105,9 +105,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
         </button>
         <button
           onClick={() => setActiveTab('highlights')}
-          className={`px-3 py-1.5 rounded-lg transition-all duration-150 ${
+          className={`px-3 py-1.5 rounded-lg transition-all duration-150 press-scale ${
             activeTab === 'highlights'
-              ? 'bg-white text-black shadow-xs font-semibold'
+              ? 'bg-white text-black shadow-2xs font-semibold'
               : 'text-neutral-500 hover:text-black'
           }`}
         >
@@ -116,9 +116,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
         {project.quickCommand && (
           <button
             onClick={() => setActiveTab('install')}
-            className={`px-3 py-1.5 rounded-lg transition-all duration-150 flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-lg transition-all duration-150 flex items-center gap-1.5 press-scale ${
               activeTab === 'install'
-                ? 'bg-white text-black shadow-xs font-semibold'
+                ? 'bg-white text-black shadow-2xs font-semibold'
                 : 'text-neutral-500 hover:text-black'
             }`}
           >
@@ -128,18 +128,18 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
         )}
       </div>
 
-      {/* Tab Panels */}
+      {/* Tab Panels with smooth animation */}
       <div className="mt-4 min-h-[90px]">
         {/* Tab 1: Overview */}
         {activeTab === 'overview' && (
-          <div className="animate-in fade-in duration-150 space-y-3">
+          <div key="tab-overview" className="animate-tab-fade space-y-3">
             {/* Optional Project Mockup / Screenshot Preview */}
             {project.imageUrl && (
-              <figure className="rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-xs mb-3">
+              <figure className="rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-2xs mb-3 group/img">
                 <img
                   src={project.imageUrl}
                   alt={project.title}
-                  className="w-full max-h-64 object-cover"
+                  className="w-full max-h-64 object-cover transition-transform duration-300 group-hover/img:scale-[1.01]"
                   loading="lazy"
                 />
                 {project.imageCaption && (
@@ -163,7 +163,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
 
         {/* Tab 2: Engineering Highlights */}
         {activeTab === 'highlights' && (
-          <div className="animate-in fade-in duration-150 p-4 rounded-xl bg-neutral-50 border border-neutral-200/70">
+          <div key="tab-highlights" className="animate-tab-fade p-4 rounded-xl bg-neutral-50 border border-neutral-200/70">
             <ul className="space-y-2">
               {project.highlights.map((item, idx) => (
                 <li key={idx} className="text-xs text-neutral-600 flex items-start gap-2">
@@ -177,7 +177,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
 
         {/* Tab 3: Quick Run / Install Command */}
         {activeTab === 'install' && project.quickCommand && (
-          <div className="animate-in fade-in duration-150">
+          <div key="tab-install" className="animate-tab-fade">
             <div className="flex items-center justify-between p-3 rounded-xl bg-neutral-900 text-neutral-100 font-mono text-xs border border-neutral-800">
               <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pr-2">
                 <span className="text-neutral-500 select-none">$</span>
@@ -185,13 +185,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
               </div>
               <button
                 onClick={handleCopy}
-                className="ml-3 shrink-0 px-2.5 py-1 rounded-md bg-neutral-800 hover:bg-neutral-700 text-[11px] font-mono text-neutral-300 hover:text-white transition-colors flex items-center gap-1.5"
+                className="ml-3 shrink-0 px-2.5 py-1 rounded-md bg-neutral-800 hover:bg-neutral-700 text-[11px] font-mono text-neutral-300 hover:text-white transition-all duration-150 press-scale flex items-center gap-1.5"
                 title="Copy command"
               >
                 {copied ? (
                   <>
-                    <Check className="w-3 h-3 text-white" />
-                    <span className="text-white">Copied!</span>
+                    <Check className="w-3 h-3 text-emerald-400" />
+                    <span className="text-emerald-400 font-medium">Copied!</span>
                   </>
                 ) : (
                   <>
@@ -217,7 +217,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
         {project.techStack.map((tech) => (
           <span
             key={tech}
-            className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-200/50"
+            className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-200/50 hover:bg-neutral-200/70 hover:border-neutral-300 transition-colors cursor-default"
           >
             #{tech.toLowerCase().replace(/\s+/g, '')}
           </span>

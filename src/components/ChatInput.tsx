@@ -86,16 +86,19 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
 
   return (
     <div className="sticky bottom-4 z-40 px-4 sm:px-8 max-w-3xl mx-auto w-full">
-      {/* Response Popover */}
+      {/* Response Popover with spring entrance */}
       {isOpen && (
-        <div className="mb-3 p-4 sm:p-5 rounded-2xl bg-white border border-neutral-200 shadow-xl">
+        <div className="animate-dialog-spring mb-3 p-4 sm:p-5 rounded-2xl bg-white border border-neutral-200 shadow-xl backdrop-blur-md">
           <div className="flex items-center justify-between pb-2.5 border-b border-neutral-100 mb-3">
-            <span className="text-xs font-semibold text-black">
-              Assistant
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-gentle-pulse" />
+              <span className="text-xs font-semibold text-black tracking-tight">
+                AI Portfolio Assistant
+              </span>
+            </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 text-neutral-400 hover:text-black hover:bg-neutral-100 rounded-full transition-colors"
+              className="p-1 text-neutral-400 hover:text-black hover:bg-neutral-100 rounded-full transition-colors press-scale"
             >
               <X className="w-4 h-4" />
             </button>
@@ -105,13 +108,13 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
             {messages.map((m, idx) => (
               <div
                 key={idx}
-                className={`flex gap-2 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`animate-tab-fade flex gap-2 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed ${
+                  className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed transition-all ${
                     m.role === 'user'
-                      ? 'bg-black text-white'
-                      : 'bg-neutral-100 text-black border border-neutral-200'
+                      ? 'bg-black text-white shadow-2xs'
+                      : 'bg-neutral-100/90 text-black border border-neutral-200/80 shadow-2xs'
                   }`}
                 >
                   <p>{m.content}</p>
@@ -121,40 +124,45 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
                         onNavigate(m.action!.sectionId);
                         setIsOpen(false);
                       }}
-                      className="mt-2 flex items-center gap-1.5 text-xs font-medium text-black hover:underline"
+                      className="group/act mt-2.5 inline-flex items-center gap-1.5 text-xs font-medium text-black px-2.5 py-1 rounded-lg bg-white border border-neutral-200 hover:bg-neutral-50 press-scale shadow-2xs"
                     >
                       <span>{m.action.label}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-150 group-hover/act:translate-x-0.5" />
                     </button>
                   )}
                 </div>
               </div>
             ))}
             {isTyping && (
-              <div className="text-neutral-400 text-xs italic">
-                Thinking...
+              <div className="animate-tab-fade flex items-center gap-1.5 py-1 text-neutral-400 text-xs">
+                <span className="font-mono text-[11px]">Thinking</span>
+                <div className="flex items-center gap-1 ml-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 dot-wave-1" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 dot-wave-2" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 dot-wave-3" />
+                </div>
               </div>
             )}
           </div>
         </div>
       )}
 
-      {/* Suggestion Pills */}
+      {/* Suggestion Pills with hover lift */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
         {quickPrompts.map((item, idx) => (
           <button
             key={idx}
             onClick={() => handleSendPrompt(item.prompt)}
-            className="shrink-0 text-xs px-3 py-1.5 rounded-full bg-white hover:bg-neutral-100 border border-neutral-200 text-neutral-700 hover:text-black transition-colors shadow-2xs"
+            className="shrink-0 text-xs px-3 py-1.5 rounded-full bg-white hover:bg-neutral-50 hover:border-neutral-300 border border-neutral-200 text-neutral-700 hover:text-black transition-all duration-150 press-scale shadow-2xs hover:-translate-y-0.5"
           >
             {item.label}
           </button>
         ))}
       </div>
 
-      {/* Minimalist Input Capsule */}
-      <div className="relative flex items-center bg-white border border-neutral-200 focus-within:border-black rounded-full px-4 py-2 transition-all shadow-sm">
-        <Sparkles className="w-4 h-4 text-neutral-400 shrink-0 mr-2" />
+      {/* Minimalist Input Capsule with tactile focus elevation */}
+      <div className="relative flex items-center bg-white border border-neutral-200 focus-within:border-neutral-900 focus-within:shadow-md focus-within:scale-[1.006] rounded-full px-4 py-2 transition-all duration-200 shadow-sm">
+        <Sparkles className="w-4 h-4 text-neutral-400 shrink-0 mr-2 transition-colors group-focus-within:text-neutral-800" />
 
         <input
           type="text"
@@ -172,7 +180,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
         <button
           onClick={() => handleSendPrompt()}
           disabled={!input.trim()}
-          className="p-1.5 rounded-full text-black hover:bg-neutral-100 disabled:text-neutral-300 disabled:hover:bg-transparent transition-colors ml-1"
+          className="p-1.5 rounded-full text-black hover:bg-neutral-100 disabled:text-neutral-300 disabled:hover:bg-transparent transition-all duration-150 press-scale ml-1"
           title="Send"
         >
           <Send className="w-4 h-4" />

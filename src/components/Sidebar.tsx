@@ -99,9 +99,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="space-y-0.5">
               <button
                 onClick={() => onNavigate('about')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-colors ${
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-all duration-150 press-scale ${
                   activeSection === 'about'
-                    ? 'bg-neutral-100 text-black font-semibold'
+                    ? 'bg-neutral-100 text-black font-semibold shadow-2xs'
                     : 'text-neutral-600 hover:bg-neutral-50 hover:text-black'
                 } ${!isOpen ? 'justify-center px-0' : ''}`}
                 title="About"
@@ -112,9 +112,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
               <button
                 onClick={() => onNavigate('writing')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-colors ${
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-all duration-150 press-scale ${
                   activeSection === 'writing'
-                    ? 'bg-neutral-100 text-black font-semibold'
+                    ? 'bg-neutral-100 text-black font-semibold shadow-2xs'
                     : 'text-neutral-600 hover:bg-neutral-50 hover:text-black'
                 } ${!isOpen ? 'justify-center px-0' : ''}`}
                 title="Writing & Journal"
@@ -139,14 +139,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <button
                     key={proj.id}
                     onClick={() => onNavigate(proj.id)}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-colors ${
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-all duration-150 press-scale ${
                       isActive
-                        ? 'bg-neutral-100 text-black font-semibold'
+                        ? 'bg-neutral-100 text-black font-semibold shadow-2xs'
                         : 'text-neutral-600 hover:bg-neutral-50 hover:text-black'
                     } ${!isOpen ? 'justify-center px-0' : ''}`}
                     title={proj.title}
                   >
-                    <Bookmark className="w-3.5 h-3.5 shrink-0 text-neutral-400" />
+                    <Bookmark className={`w-3.5 h-3.5 shrink-0 transition-colors ${isActive ? 'text-black' : 'text-neutral-400'}`} />
                     {isOpen && <span className="truncate">{proj.title}</span>}
                   </button>
                 );
@@ -164,9 +164,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="space-y-0.5">
               <button
                 onClick={() => onNavigate('contact')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-colors ${
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-all duration-150 press-scale ${
                   activeSection === 'contact'
-                    ? 'bg-neutral-100 text-black font-semibold'
+                    ? 'bg-neutral-100 text-black font-semibold shadow-2xs'
                     : 'text-neutral-600 hover:bg-neutral-50 hover:text-black'
                 } ${!isOpen ? 'justify-center px-0' : ''}`}
                 title="Contact"

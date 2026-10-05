@@ -29,7 +29,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ posts, onSelectPost })
           <article
             key={post.id}
             onClick={() => onSelectPost(post)}
-            className="group py-5 cursor-pointer flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 transition-colors hover:bg-neutral-50/70 rounded-2xl px-4 -mx-4"
+            className="group py-5 cursor-pointer flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 transition-all duration-200 hover:-translate-y-0.5 hover:bg-neutral-50/80 rounded-2xl px-4 -mx-4 press-scale"
           >
             <div className="flex items-start justify-between gap-4 w-full">
               <div className="min-w-0 flex-1">
@@ -45,7 +45,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ posts, onSelectPost })
 
                 <h3 className="text-base font-medium text-neutral-900 group-hover:text-black flex items-center gap-1.5 transition-colors">
                   <span>{post.title}</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
+                  <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
                 </h3>
 
                 <p className="text-sm text-neutral-500 mt-1.5 line-clamp-2 leading-relaxed">
@@ -56,7 +56,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ posts, onSelectPost })
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-600 border border-neutral-200/50"
+                      className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-600 border border-neutral-200/50 hover:bg-neutral-200/60 hover:text-black transition-colors"
                     >
                       #{tag.toLowerCase().replace(/\s+/g, '')}
                     </span>
@@ -64,13 +64,13 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ posts, onSelectPost })
                 </div>
               </div>
 
-              {/* Optional Cover Thumbnail */}
+              {/* Optional Cover Thumbnail with smooth scale */}
               {post.coverImage && (
-                <div className="w-20 h-20 sm:w-24 sm:h-20 rounded-xl overflow-hidden border border-neutral-200 shrink-0 bg-neutral-100 hidden sm:block group-hover:border-neutral-400 transition-colors">
+                <div className="w-20 h-20 sm:w-24 sm:h-20 rounded-xl overflow-hidden border border-neutral-200 shrink-0 bg-neutral-100 hidden sm:block group-hover:border-neutral-400 transition-colors shadow-2xs">
                   <img
                     src={post.coverImage}
                     alt={post.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                     loading="lazy"
                   />
                 </div>

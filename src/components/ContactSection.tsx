@@ -23,18 +23,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ personal }) => {
           href={personal.github}
           target="_blank"
           rel="noreferrer"
-          className="p-4 rounded-2xl bg-white hover:bg-neutral-50 border border-neutral-200 transition-colors flex items-center justify-between group"
+          className="p-4 rounded-2xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xs flex items-center justify-between group press-scale"
         >
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black">
+            <div className="w-8 h-8 rounded-full bg-neutral-100 group-hover:bg-neutral-200/80 flex items-center justify-center text-black transition-colors">
               <GithubIcon className="w-4 h-4" />
             </div>
             <div>
-              <p className="text-xs text-neutral-400">Repositories</p>
+              <p className="text-xs text-neutral-400 font-mono">Repositories</p>
               <p className="text-sm font-medium text-black">GitHub</p>
             </div>
           </div>
-          <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-black transition-colors" />
+          <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-black transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </a>
 
         {/* LinkedIn */}
@@ -42,35 +42,35 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ personal }) => {
           href={personal.linkedin}
           target="_blank"
           rel="noreferrer"
-          className="p-4 rounded-2xl bg-white hover:bg-neutral-50 border border-neutral-200 transition-colors flex items-center justify-between group"
+          className="p-4 rounded-2xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xs flex items-center justify-between group press-scale"
         >
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black">
+            <div className="w-8 h-8 rounded-full bg-neutral-100 group-hover:bg-neutral-200/80 flex items-center justify-center text-black transition-colors">
               <LinkedinIcon className="w-4 h-4" />
             </div>
             <div>
-              <p className="text-xs text-neutral-400">Network</p>
+              <p className="text-xs text-neutral-400 font-mono">Network</p>
               <p className="text-sm font-medium text-black">LinkedIn</p>
             </div>
           </div>
-          <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-black transition-colors" />
+          <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-black transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </a>
 
         {/* Email */}
         <a
           href={`mailto:${personal.email}`}
-          className="p-4 rounded-2xl bg-white hover:bg-neutral-50 border border-neutral-200 transition-colors flex items-center justify-between group"
+          className="p-4 rounded-2xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xs flex items-center justify-between group press-scale"
         >
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black">
+            <div className="w-8 h-8 rounded-full bg-neutral-100 group-hover:bg-neutral-200/80 flex items-center justify-center text-black transition-colors">
               <Mail className="w-4 h-4" />
             </div>
             <div>
-              <p className="text-xs text-neutral-400">Direct</p>
+              <p className="text-xs text-neutral-400 font-mono">Direct</p>
               <p className="text-sm font-medium text-black">Email</p>
             </div>
           </div>
-          <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-black transition-colors" />
+          <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-black transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </a>
       </div>
 

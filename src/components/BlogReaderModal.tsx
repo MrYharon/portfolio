@@ -38,18 +38,18 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/45 backdrop-blur-sm animate-in fade-in duration-200"
       onClick={(e) => {
         // Close if user clicks the dark backdrop outside the article card
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="w-full max-w-2xl max-h-[90vh] bg-white rounded-2xl border border-neutral-200 shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
+      <div className="animate-dialog-spring w-full max-w-2xl max-h-[90vh] bg-white rounded-2xl border border-neutral-200 shadow-2xl flex flex-col overflow-hidden">
         {/* Modal Top Header Bar */}
-        <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-neutral-100 bg-white/80 backdrop-blur-xs shrink-0">
+        <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-neutral-100 bg-white/90 backdrop-blur-md shrink-0">
           <button
             onClick={onClose}
-            className="flex items-center gap-1.5 text-xs font-medium text-neutral-600 hover:text-black transition-colors px-2 py-1 -ml-2 rounded-lg hover:bg-neutral-100"
+            className="flex items-center gap-1.5 text-xs font-medium text-neutral-600 hover:text-black transition-colors px-2.5 py-1 -ml-2 rounded-lg hover:bg-neutral-100 press-scale"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to portfolio</span>
@@ -57,7 +57,7 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
 
           <button
             onClick={onClose}
-            className="p-1.5 text-neutral-400 hover:text-black rounded-lg hover:bg-neutral-100 transition-colors"
+            className="p-1.5 text-neutral-400 hover:text-black rounded-lg hover:bg-neutral-100 transition-colors press-scale"
             title="Close (Esc)"
           >
             <X className="w-4 h-4" />
