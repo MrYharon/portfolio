@@ -34,12 +34,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
       {/* Header & Badges */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2">
-          {/* Minimal monochrome status badge */}
-          <span className="inline-flex items-center text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-800 border border-neutral-200">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-gentle-pulse" />
-            {project.status}
-          </span>
-          <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-neutral-50 text-neutral-600 border border-neutral-200/60">
+          <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-200/60">
             {project.category}
           </span>
         </div>
