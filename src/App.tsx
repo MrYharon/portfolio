@@ -13,7 +13,12 @@ import type { BlogPost } from './types/portfolio';
 
 export function App() {
   const [activeSection, setActiveSection] = useState('hero');
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 1024;
+    }
+    return true;
+  });
   const [chatInitialPrompt, setChatInitialPrompt] = useState('');
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 

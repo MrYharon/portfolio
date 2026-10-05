@@ -45,25 +45,27 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Right: Clean minimal links */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5 sm:gap-2">
         <a
           href="https://github.com/MrYharon"
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-neutral-600 hover:text-black hover:bg-neutral-100 rounded-full transition-colors"
+          className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs text-neutral-600 hover:text-black hover:bg-neutral-100 rounded-full transition-colors"
+          title="GitHub"
         >
           <GithubIcon className="w-3.5 h-3.5" />
-          <span>GitHub</span>
+          <span className="hidden sm:inline">GitHub</span>
         </a>
 
         <a
           href={linkedinUrl}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-neutral-600 hover:text-black hover:bg-neutral-100 rounded-full transition-colors"
+          className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs text-neutral-600 hover:text-black hover:bg-neutral-100 rounded-full transition-colors"
+          title="LinkedIn"
         >
           <LinkedinIcon className="w-3.5 h-3.5" />
-          <span>LinkedIn</span>
+          <span className="hidden sm:inline">LinkedIn</span>
         </a>
       </div>
     </header>

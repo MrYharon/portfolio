@@ -105,20 +105,20 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
         }`}
       >
         {/* Notion Minimalist Sticky Top Navigation Bar */}
-        <div className="relative border-b border-neutral-100 bg-white/95 backdrop-blur-xs shrink-0 z-10">
-          <div className="flex items-center justify-between px-4 sm:px-6 py-2.5">
+        <div className="relative border-b border-neutral-100 bg-white/95 backdrop-blur-xs shrink-0 z-10 pt-[env(safe-area-inset-top,0px)]">
+          <div className="flex items-center justify-between px-3 sm:px-6 py-2.5">
             {/* Left: Notion-style Breadcrumb / Back button */}
             <div className="flex items-center gap-1.5 text-xs text-neutral-500">
               <button
                 onClick={handleInitiateClose}
-                className="flex items-center gap-1.5 px-2 py-1 -ml-1.5 text-neutral-600 hover:text-black hover:bg-neutral-100 rounded-md transition-colors font-medium press-scale"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 -ml-1 text-neutral-700 hover:text-black hover:bg-neutral-100 rounded-md transition-colors font-medium press-scale"
                 title="Close side peak (Esc)"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Writing</span>
               </button>
-              <ChevronRight className="w-3 h-3 text-neutral-300" />
-              <span className="font-mono text-[11px] text-neutral-400 hidden sm:inline truncate max-w-[200px]">
+              <ChevronRight className="w-3 h-3 text-neutral-300 hidden sm:inline" />
+              <span className="font-mono text-[11px] text-neutral-400 hidden md:inline truncate max-w-[200px]">
                 {activePost.title}
               </span>
               <kbd className="hidden md:inline-block font-mono text-[10px] text-neutral-400 bg-neutral-100 border border-neutral-200 px-1 py-0.5 rounded ml-1">
@@ -130,7 +130,7 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
             <div className="flex items-center gap-1">
               <button
                 onClick={handleCopyLink}
-                className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-neutral-600 hover:text-black rounded-md hover:bg-neutral-100 transition-colors press-scale"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-neutral-600 hover:text-black rounded-md hover:bg-neutral-100 transition-colors press-scale"
                 title="Copy link to article"
               >
                 {copied ? (
@@ -148,7 +148,7 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
 
               <button
                 onClick={handleInitiateClose}
-                className="p-1.5 text-neutral-400 hover:text-black rounded-md hover:bg-neutral-100 transition-colors press-scale"
+                className="p-2 -mr-1 text-neutral-400 hover:text-black rounded-md hover:bg-neutral-100 transition-colors press-scale"
                 title="Close (Esc)"
               >
                 <X className="w-4 h-4" />
@@ -169,7 +169,7 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
         <div
           ref={articleContainerRef}
           onScroll={handleScroll}
-          className="flex-1 overflow-y-auto px-6 sm:px-12 lg:px-16 py-8 space-y-6"
+          className="flex-1 overflow-y-auto px-5 sm:px-12 lg:px-16 py-6 sm:py-8 space-y-6 pb-[calc(env(safe-area-inset-bottom,0px)+4rem)]"
         >
           <div className="max-w-2xl mx-auto space-y-6">
             {/* Notion Page Icon */}

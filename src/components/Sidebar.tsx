@@ -27,18 +27,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onToggle,
   linkedinUrl = 'https://linkedin.com',
 }) => {
+  const handleNav = (sectionId: string) => {
+    onNavigate(sectionId);
+    if (typeof window !== 'undefined' && window.innerWidth < 1024 && isOpen) {
+      onToggle();
+    }
+  };
+
   return (
     <>
       {/* Mobile backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/10 backdrop-blur-xs z-40 lg:hidden"
+          className="fixed inset-0 bg-black/20 backdrop-blur-xs z-40 lg:hidden"
           onClick={onToggle}
         />
       )}
 
       <aside
-        className={`fixed top-0 left-0 bottom-0 z-50 flex flex-col bg-white border-r border-neutral-100 transition-all duration-200 ease-in-out ${
+        className={`fixed top-0 left-0 bottom-0 z-50 flex flex-col bg-white border-r border-neutral-100 transition-all duration-200 ease-in-out pb-[env(safe-area-inset-bottom,0px)] ${
           isOpen ? 'w-68 translate-x-0' : '-translate-x-full lg:translate-x-0 lg:w-18'
         }`}
       >
@@ -76,7 +83,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Top Quick Action */}
         <div className="px-3 pt-3 pb-2">
           <button
-            onClick={() => onNavigate('hero')}
+            onClick={() => handleNav('hero')}
             className={`flex items-center gap-3 w-full py-2 px-3 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200/60 text-black text-xs font-medium transition-colors ${
               !isOpen ? 'justify-center px-0' : ''
             }`}
@@ -98,7 +105,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             )}
             <div className="space-y-0.5">
               <button
-                onClick={() => onNavigate('about')}
+                onClick={() => handleNav('about')}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-all duration-150 press-scale ${
                   activeSection === 'about'
                     ? 'bg-neutral-100 text-black font-semibold shadow-2xs'
@@ -111,7 +118,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </button>
 
               <button
-                onClick={() => onNavigate('writing')}
+                onClick={() => handleNav('writing')}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-all duration-150 press-scale ${
                   activeSection === 'writing'
                     ? 'bg-neutral-100 text-black font-semibold shadow-2xs'
@@ -138,7 +145,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 return (
                   <button
                     key={proj.id}
-                    onClick={() => onNavigate(proj.id)}
+                    onClick={() => handleNav(proj.id)}
                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-all duration-150 press-scale ${
                       isActive
                         ? 'bg-neutral-100 text-black font-semibold shadow-2xs'
@@ -163,7 +170,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             )}
             <div className="space-y-0.5">
               <button
-                onClick={() => onNavigate('contact')}
+                onClick={() => handleNav('contact')}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-left transition-all duration-150 press-scale ${
                   activeSection === 'contact'
                     ? 'bg-neutral-100 text-black font-semibold shadow-2xs'

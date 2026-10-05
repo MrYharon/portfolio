@@ -74,7 +74,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ personal }) => {
         </a>
       </div>
 
-      <div className="mt-8 pt-4 border-t border-neutral-100 flex items-center justify-between text-xs text-neutral-400">
+      <div className="mt-8 pt-4 border-t border-neutral-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-neutral-400">
         <span>{personal.email}</span>
         <span>© {new Date().getFullYear()} {personal.name}</span>
       </div>

@@ -29,7 +29,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ posts, onSelectPost })
           <article
             key={post.id}
             onClick={() => onSelectPost(post)}
-            className="group py-5 cursor-pointer flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 rounded-2xl px-4 -mx-4 transition-colors duration-200 hover:bg-neutral-50/80"
+            className="group py-4 sm:py-5 cursor-pointer flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 rounded-2xl px-3 sm:px-4 -mx-3 sm:-mx-4 transition-colors duration-200 hover:bg-neutral-50/80"
           >
             <div className="flex items-start justify-between gap-4 w-full">
               <div className="min-w-0 flex-1">

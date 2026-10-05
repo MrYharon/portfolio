@@ -85,11 +85,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
   };
 
   return (
-    <div className="sticky bottom-4 z-40 px-4 sm:px-8 max-w-3xl mx-auto w-full">
+    <div className="sticky bottom-2 sm:bottom-4 z-40 px-3 sm:px-8 max-w-3xl mx-auto w-full pb-[env(safe-area-inset-bottom,0px)]">
       {/* Response Popover with spring entrance */}
       {isOpen && (
-        <div className="animate-dialog-spring mb-3 p-4 sm:p-5 rounded-2xl bg-white border border-neutral-200 shadow-xl backdrop-blur-md">
-          <div className="flex items-center justify-between pb-2.5 border-b border-neutral-100 mb-3">
+        <div className="animate-dialog-spring mb-2.5 p-3.5 sm:p-5 rounded-2xl bg-white border border-neutral-200 shadow-xl backdrop-blur-md">
+          <div className="flex items-center justify-between pb-2 border-b border-neutral-100 mb-2.5">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-gentle-pulse" />
               <span className="text-xs font-semibold text-black tracking-tight">
@@ -104,7 +104,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
             </button>
           </div>
 
-          <div className="max-h-56 overflow-y-auto space-y-2.5 text-xs pr-1">
+          <div className="max-h-48 sm:max-h-56 overflow-y-auto space-y-2.5 text-xs pr-1">
             {messages.map((m, idx) => (
               <div
                 key={idx}
@@ -161,7 +161,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
       </div>
 
       {/* Minimalist Input Capsule with tactile focus elevation */}
-      <div className="relative flex items-center bg-white border border-neutral-200 focus-within:border-neutral-900 focus-within:shadow-md focus-within:scale-[1.006] rounded-full px-4 py-2 transition-all duration-200 shadow-sm">
+      <div className="relative flex items-center bg-white border border-neutral-200 focus-within:border-neutral-900 focus-within:shadow-md focus-within:scale-[1.006] rounded-full px-3.5 sm:px-4 py-2 transition-all duration-200 shadow-sm">
         <Sparkles className="w-4 h-4 text-neutral-400 shrink-0 mr-2 transition-colors group-focus-within:text-neutral-800" />
 
         <input
@@ -173,8 +173,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
               handleSendPrompt();
             }
           }}
-          placeholder="Ask anything about Hugh's projects..."
-          className="w-full bg-transparent text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none"
+          placeholder="Ask about projects, tech, or bio..."
+          className="w-full bg-transparent text-base sm:text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none"
         />
 
         <button
