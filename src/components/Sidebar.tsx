@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import type { Project } from '../types/portfolio';
 import { LinkedinIcon, GithubIcon } from './Icons';
+import { HdLogo } from './HdLogo';
 
 interface SidebarProps {
   projects: Project[];
@@ -61,6 +62,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
           {isOpen && (
             <div className="mr-auto ml-2 flex items-center gap-2">
+              <div className="w-5 h-5 bg-black text-white rounded-md flex items-center justify-center p-0.5 shrink-0 shadow-2xs">
+                <HdLogo className="w-full h-full text-white" />
+              </div>
               <span className="font-semibold text-base text-black tracking-tight">
                 Hugh
               </span>

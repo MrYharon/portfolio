@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu } from 'lucide-react';
 import { LinkedinIcon, GithubIcon } from './Icons';
+import { HdLogo } from './HdLogo';
 
 interface HeaderProps {
   activeSection: string;
@@ -39,9 +40,14 @@ export const Header: React.FC<HeaderProps> = ({
           <Menu className="w-5 h-5" />
         </button>
 
-        <span className="text-xs font-mono text-neutral-400">
-          hugh / <span className="text-black font-sans font-medium">{getSectionTitle(activeSection)}</span>
-        </span>
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 bg-black text-white rounded-md flex items-center justify-center p-0.5 shrink-0 shadow-2xs">
+            <HdLogo className="w-full h-full text-white" />
+          </div>
+          <span className="text-xs font-mono text-neutral-400">
+            hugh / <span className="text-black font-sans font-medium">{getSectionTitle(activeSection)}</span>
+          </span>
+        </div>
       </div>
 
       {/* Right: Clean minimal links */}

@@ -8,6 +8,7 @@ import { BlogReaderModal } from './components/BlogReaderModal';
 import { ProjectCard } from './components/ProjectCard';
 import { ContactSection } from './components/ContactSection';
 import { ChatInput } from './components/ChatInput';
+import { LoadingScreen } from './components/LoadingScreen';
 import { portfolioData } from './data/portfolioData';
 import type { BlogPost } from './types/portfolio';
 
@@ -149,6 +150,9 @@ export function App() {
         post={selectedPost}
         onClose={() => setSelectedPost(null)}
       />
+
+      {/* Bespoke HD Intro Splash / Loading Screen */}
+      <LoadingScreen minDurationMs={850} />
     </div>
   );
 }
