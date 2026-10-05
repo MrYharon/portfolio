@@ -9,35 +9,28 @@ interface BlogReaderModalProps {
 
 export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose }) => {
   const [activePost, setActivePost] = useState<BlogPost | null>(post);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [copied, setCopied] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const articleContainerRef = useRef<HTMLDivElement>(null);
   const isClosingRef = useRef(false);
 
-  // Sync prop changes with local state for smooth enter/exit animations
+  // Sync prop changes with activePost state
   useEffect(() => {
     if (post) {
       setActivePost(post);
+      setIsClosing(false);
       isClosingRef.current = false;
       setScrollProgress(0);
       setCopied(false);
 
-      // Trigger enter animation on the next animation frame
-      const timer = requestAnimationFrame(() => {
-        setIsOpen(true);
-      });
-
-      // Prevent background scrolling while reader is open
+      // Lock main document scroll
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
 
       return () => {
-        cancelAnimationFrame(timer);
         document.body.style.overflow = originalOverflow;
       };
-    } else {
-      setIsOpen(false);
     }
   }, [post]);
 
@@ -45,14 +38,15 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
   const handleInitiateClose = () => {
     if (isClosingRef.current) return;
     isClosingRef.current = true;
-    setIsOpen(false);
+    setIsClosing(true);
 
-    // Wait for the slide-out CSS animation (340ms) to complete before unmounting
+    // Wait 240ms for the exit animation to finish before notifying parent
     setTimeout(() => {
       onClose();
       setActivePost(null);
+      setIsClosing(false);
       isClosingRef.current = false;
-    }, 340);
+    }, 240);
   };
 
   // Keyboard navigation: Close on Escape key
@@ -95,23 +89,23 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
       role="dialog"
       aria-modal="true"
       aria-label={activePost.title}
-      className={`fixed inset-0 z-50 flex justify-end backdrop-fade ${
-        isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+      className={`fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/40 backdrop-blur-md ${
+        isClosing ? 'modal-backdrop-out' : 'modal-backdrop-in'
       }`}
+      onClick={(e) => {
+        // Close if user clicks the dimmed backdrop outside the card
+        if (e.target === e.currentTarget) {
+          handleInitiateClose();
+        }
+      }}
     >
-      {/* Soft Dimming Backdrop */}
+      {/* Silky-Smooth Pop-Up Reader Card */}
       <div
-        className="fixed inset-0 bg-neutral-950/25 backdrop-blur-[2px]"
-        onClick={handleInitiateClose}
-      />
-
-      {/* Slide-over Drawer Panel */}
-      <div
-        className={`relative z-10 w-full sm:max-w-2xl h-full bg-white shadow-2xl border-l border-neutral-200/90 flex flex-col drawer-slide ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`w-full max-w-2xl max-h-[88vh] bg-white rounded-2xl border border-neutral-200/90 shadow-2xl flex flex-col overflow-hidden relative ${
+          isClosing ? 'modal-card-out' : 'modal-card-in'
         }`}
       >
-        {/* Sticky Header Bar with Reading Progress */}
+        {/* Sticky Header Bar with Reading Progress Line */}
         <div className="relative border-b border-neutral-100 bg-white/95 backdrop-blur-md shrink-0">
           <div className="flex items-center justify-between px-5 sm:px-7 py-3.5">
             <button
@@ -147,7 +141,7 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
               <button
                 onClick={handleInitiateClose}
                 className="p-1.5 text-neutral-400 hover:text-black rounded-lg hover:bg-neutral-100 transition-colors press-scale"
-                title="Close drawer (Esc)"
+                title="Close modal (Esc)"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -167,9 +161,9 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
         <div
           ref={articleContainerRef}
           onScroll={handleScroll}
-          className="flex-1 overflow-y-auto px-6 py-8 sm:px-10 sm:py-10 space-y-7"
+          className="flex-1 overflow-y-auto px-6 py-7 sm:px-10 sm:py-9 space-y-6"
         >
-          <article className="space-y-6 max-w-prose mx-auto">
+          <article className="modal-content-stagger space-y-6 max-w-prose mx-auto">
             {/* Metadata badges */}
             <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-neutral-400">
               <span className="flex items-center gap-1.5">
