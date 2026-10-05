@@ -131,4 +131,12 @@
   transform: scale(0.975);
 }
 
+/* Linear-style slide-over drawer easing */
+.drawer-slide {
+  transition: transform 340ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.backdrop-fade {
+  transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 

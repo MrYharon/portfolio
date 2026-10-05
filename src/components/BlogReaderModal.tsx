@@ -8,36 +8,65 @@ interface BlogReaderModalProps {
 }
 
 export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose }) => {
+  const [activePost, setActivePost] = useState<BlogPost | null>(post);
+  const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const articleContainerRef = useRef<HTMLDivElement>(null);
+  const isClosingRef = useRef(false);
 
-  // Handle escape key and lock body scroll while modal is open
+  // Sync prop changes with local state for smooth enter/exit animations
   useEffect(() => {
-    if (!post) return;
+    if (post) {
+      setActivePost(post);
+      isClosingRef.current = false;
+      setScrollProgress(0);
+      setCopied(false);
 
-    // Reset progress and copied state when opening new post
-    setScrollProgress(0);
-    setCopied(false);
+      // Trigger enter animation on the next animation frame
+      const timer = requestAnimationFrame(() => {
+        setIsOpen(true);
+      });
 
-    // Lock scrolling on the main page
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+      // Prevent background scrolling while reader is open
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
 
-    // Keyboard navigation: Close on Escape key
+      return () => {
+        cancelAnimationFrame(timer);
+        document.body.style.overflow = originalOverflow;
+      };
+    } else {
+      setIsOpen(false);
+    }
+  }, [post]);
+
+  // Graceful exit transition handler
+  const handleInitiateClose = () => {
+    if (isClosingRef.current) return;
+    isClosingRef.current = true;
+    setIsOpen(false);
+
+    // Wait for the slide-out CSS animation (340ms) to complete before unmounting
+    setTimeout(() => {
+      onClose();
+      setActivePost(null);
+      isClosingRef.current = false;
+    }, 340);
+  };
+
+  // Keyboard navigation: Close on Escape key
+  useEffect(() => {
+    if (!activePost) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onClose();
+        handleInitiateClose();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
-
-    // Cleanup when modal unmounts or post changes to null
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [post, onClose]);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activePost]);
 
   const handleScroll = () => {
     const el = articleContainerRef.current;
@@ -59,29 +88,41 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
     }
   };
 
-  // If no post is selected, render nothing
-  if (!post) return null;
+  if (!activePost) return null;
 
   return (
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/45 backdrop-blur-md animate-in fade-in duration-200"
-      onClick={(e) => {
-        // Close if user clicks the dark backdrop outside the article card
-        if (e.target === e.currentTarget) onClose();
-      }}
+      aria-label={activePost.title}
+      className={`fixed inset-0 z-50 flex justify-end backdrop-fade ${
+        isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+      }`}
     >
-      <div className="animate-dialog-spring w-full max-w-2xl max-h-[90vh] bg-white rounded-2xl border border-neutral-200/90 shadow-2xl flex flex-col overflow-hidden relative">
-        {/* Top Header Bar with Live Reading Progress */}
+      {/* Soft Dimming Backdrop */}
+      <div
+        className="fixed inset-0 bg-neutral-950/25 backdrop-blur-[2px]"
+        onClick={handleInitiateClose}
+      />
+
+      {/* Slide-over Drawer Panel */}
+      <div
+        className={`relative z-10 w-full sm:max-w-2xl h-full bg-white shadow-2xl border-l border-neutral-200/90 flex flex-col drawer-slide ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        {/* Sticky Header Bar with Reading Progress */}
         <div className="relative border-b border-neutral-100 bg-white/95 backdrop-blur-md shrink-0">
           <div className="flex items-center justify-between px-5 sm:px-7 py-3.5">
             <button
-              onClick={onClose}
-              className="flex items-center gap-1.5 text-xs font-medium text-neutral-600 hover:text-black transition-colors px-2.5 py-1.5 -ml-2 rounded-lg hover:bg-neutral-100 press-scale"
+              onClick={handleInitiateClose}
+              className="flex items-center gap-2 text-xs font-medium text-neutral-600 hover:text-black transition-colors px-2.5 py-1.5 -ml-2 rounded-lg hover:bg-neutral-100 press-scale"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back to portfolio</span>
+              <kbd className="hidden sm:inline-block font-mono text-[10px] text-neutral-400 bg-neutral-100 border border-neutral-200/70 px-1.5 py-0.5 rounded">
+                Esc
+              </kbd>
             </button>
 
             <div className="flex items-center gap-1.5">
@@ -92,8 +133,8 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
               >
                 {copied ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-emerald-500" />
-                    <span className="text-emerald-500 font-mono text-[11px]">Copied</span>
+                    <Check className="w-3.5 h-3.5 text-neutral-900" />
+                    <span className="text-neutral-900 font-mono text-[11px]">Copied</span>
                   </>
                 ) : (
                   <>
@@ -104,9 +145,9 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
               </button>
 
               <button
-                onClick={onClose}
+                onClick={handleInitiateClose}
                 className="p-1.5 text-neutral-400 hover:text-black rounded-lg hover:bg-neutral-100 transition-colors press-scale"
-                title="Close (Esc)"
+                title="Close drawer (Esc)"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -116,40 +157,40 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
           {/* Reading Progress Line */}
           <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-neutral-100">
             <div
-              className="h-full bg-black transition-all duration-150 ease-out"
+              className="h-full bg-black transition-all duration-100 ease-out"
               style={{ width: `${scrollProgress}%` }}
             />
           </div>
         </div>
 
-        {/* Scrollable Article Body with Staggered Entrance */}
+        {/* Scrollable Article Body */}
         <div
           ref={articleContainerRef}
           onScroll={handleScroll}
-          className="overflow-y-auto p-6 sm:p-9 space-y-6"
+          className="flex-1 overflow-y-auto px-6 py-8 sm:px-10 sm:py-10 space-y-7"
         >
-          <article className="animate-article-reveal space-y-6">
+          <article className="space-y-6 max-w-prose mx-auto">
             {/* Metadata badges */}
             <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-neutral-400">
-              <span className="flex items-center gap-1">
+              <span className="flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5" />
-                <span>{post.date}</span>
+                <span>{activePost.date}</span>
               </span>
               <span>•</span>
-              <span className="flex items-center gap-1">
+              <span className="flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5" />
-                <span>{post.readTime}</span>
+                <span>{activePost.readTime}</span>
               </span>
             </div>
 
             {/* Title */}
-            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-black leading-snug">
-              {post.title}
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-neutral-900 leading-snug">
+              {activePost.title}
             </h1>
 
-            {/* Tags */}
+            {/* Tag Pills */}
             <div className="flex flex-wrap items-center gap-1.5 pt-1">
-              {post.tags.map((tag) => (
+              {activePost.tags.map((tag) => (
                 <span
                   key={tag}
                   className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-200/60"
@@ -159,28 +200,28 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
               ))}
             </div>
 
-            {/* Cover Image if present */}
-            {post.coverImage && (
-              <figure className="rounded-2xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-xs group/cover">
+            {/* Optional Cover Image */}
+            {activePost.coverImage && (
+              <figure className="rounded-2xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-xs">
                 <img
-                  src={post.coverImage}
-                  alt={post.title}
-                  className="w-full max-h-80 object-cover transition-transform duration-500 ease-out group-hover/cover:scale-[1.01]"
+                  src={activePost.coverImage}
+                  alt={activePost.title}
+                  className="w-full max-h-80 object-cover"
                   loading="lazy"
                 />
-                {post.coverCaption && (
+                {activePost.coverCaption && (
                   <figcaption className="px-4 py-2.5 text-center text-xs font-mono text-neutral-500 bg-neutral-50 border-t border-neutral-100">
-                    {post.coverCaption}
+                    {activePost.coverCaption}
                   </figcaption>
                 )}
               </figure>
             )}
 
-            <div className="h-[1px] w-full bg-neutral-100 my-2" />
+            <div className="h-[1px] w-full bg-neutral-100 my-4" />
 
             {/* Paragraphs and Inline Photos */}
-            <div className="space-y-4 text-sm sm:text-base text-neutral-700 leading-relaxed font-sans">
-              {post.content.map((block, idx) => {
+            <div className="space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed font-sans">
+              {activePost.content.map((block, idx) => {
                 // Support inline image syntax: "image: /blog/photo.png | Caption text"
                 if (block.startsWith('image:')) {
                   const parts = block.replace('image:', '').split('|');
@@ -191,7 +232,7 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
                     <figure key={idx} className="my-6 rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-xs">
                       <img
                         src={imgUrl}
-                        alt={caption || post.title}
+                        alt={caption || activePost.title}
                         className="w-full object-cover max-h-96"
                         loading="lazy"
                       />
@@ -213,13 +254,13 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
             </div>
 
             {/* Article Footer Note */}
-            <div className="mt-8 pt-6 border-t border-neutral-100 text-xs font-mono text-neutral-400 flex items-center justify-between">
-              <span>Written by Hugh Daeniel Dela Peña</span>
+            <div className="mt-12 pt-6 border-t border-neutral-100 text-xs font-mono text-neutral-400 flex items-center justify-between">
+              <span>Hugh Daeniel Dela Peña</span>
               <button
-                onClick={onClose}
-                className="text-black hover:underline press-scale font-medium"
+                onClick={handleInitiateClose}
+                className="text-neutral-900 hover:underline press-scale font-medium"
               >
-                Done reading ↑
+                Back to portfolio ↑
               </button>
             </div>
           </article>
@@ -228,4 +269,3 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
     </div>
   );
 };
-

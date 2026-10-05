@@ -29,7 +29,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ posts, onSelectPost })
           <article
             key={post.id}
             onClick={() => onSelectPost(post)}
-            className="group py-5 cursor-pointer flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 transition-all duration-200 hover:-translate-y-0.5 hover:bg-neutral-50/80 rounded-2xl px-4 -mx-4 press-scale"
+            className="group py-5 cursor-pointer flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 rounded-2xl px-4 -mx-4 transition-colors duration-200 hover:bg-neutral-50/80"
           >
             <div className="flex items-start justify-between gap-4 w-full">
               <div className="min-w-0 flex-1">
@@ -45,7 +45,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ posts, onSelectPost })
 
                 <h3 className="text-base font-medium text-neutral-900 group-hover:text-black flex items-center gap-1.5 transition-colors">
                   <span>{post.title}</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
+                  <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
                 </h3>
 
                 <p className="text-sm text-neutral-500 mt-1.5 line-clamp-2 leading-relaxed">
