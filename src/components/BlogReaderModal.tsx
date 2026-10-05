@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import type { BlogPost } from '../types/portfolio';
-import { X, ArrowLeft, Calendar, Clock, Share2, Check } from 'lucide-react';
+import { X, ArrowLeft, Calendar, Clock, Share2, Check, FileText, ChevronRight } from 'lucide-react';
 
 interface BlogReaderModalProps {
   post: BlogPost | null;
@@ -24,7 +24,7 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
       setScrollProgress(0);
       setCopied(false);
 
-      // Lock main document scroll
+      // Lock main document scroll while Side Peak is open
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
 
@@ -34,19 +34,18 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
     }
   }, [post]);
 
-  // Graceful exit transition handler
+  // Graceful exit transition (220ms matches notion-peak-exit)
   const handleInitiateClose = () => {
     if (isClosingRef.current) return;
     isClosingRef.current = true;
     setIsClosing(true);
 
-    // Wait 240ms for the exit animation to finish before notifying parent
     setTimeout(() => {
       onClose();
       setActivePost(null);
       setIsClosing(false);
       isClosingRef.current = false;
-    }, 240);
+    }, 220);
   };
 
   // Keyboard navigation: Close on Escape key
@@ -89,41 +88,50 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
       role="dialog"
       aria-modal="true"
       aria-label={activePost.title}
-      className={`fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/40 backdrop-blur-md ${
-        isClosing ? 'modal-backdrop-out' : 'modal-backdrop-in'
-      }`}
-      onClick={(e) => {
-        // Close if user clicks the dimmed backdrop outside the card
-        if (e.target === e.currentTarget) {
-          handleInitiateClose();
-        }
-      }}
+      className="fixed inset-0 z-50 overflow-hidden"
     >
-      {/* Silky-Smooth Pop-Up Reader Card */}
+      {/* Notion Lightweight Dimming Backdrop (Pure alpha, zero blur lag) */}
       <div
-        className={`w-full max-w-2xl max-h-[88vh] bg-white rounded-2xl border border-neutral-200/90 shadow-2xl flex flex-col overflow-hidden relative ${
-          isClosing ? 'modal-card-out' : 'modal-card-in'
+        className={`fixed inset-0 bg-black/25 ${
+          isClosing ? 'notion-backdrop-exit' : 'notion-backdrop-enter'
+        }`}
+        onClick={handleInitiateClose}
+      />
+
+      {/* Notion Side Peak Panel (Hardware GPU Accelerated) */}
+      <div
+        className={`fixed inset-y-0 right-0 z-50 w-full sm:w-[680px] lg:w-[740px] xl:w-[780px] bg-white border-l border-neutral-200 shadow-[-12px_0_36px_rgba(0,0,0,0.08)] flex flex-col ${
+          isClosing ? 'notion-peak-exit' : 'notion-peak-enter'
         }`}
       >
-        {/* Sticky Header Bar with Reading Progress Line */}
-        <div className="relative border-b border-neutral-100 bg-white/95 backdrop-blur-md shrink-0">
-          <div className="flex items-center justify-between px-5 sm:px-7 py-3.5">
-            <button
-              onClick={handleInitiateClose}
-              className="flex items-center gap-2 text-xs font-medium text-neutral-600 hover:text-black transition-colors px-2.5 py-1.5 -ml-2 rounded-lg hover:bg-neutral-100 press-scale"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to portfolio</span>
-              <kbd className="hidden sm:inline-block font-mono text-[10px] text-neutral-400 bg-neutral-100 border border-neutral-200/70 px-1.5 py-0.5 rounded">
+        {/* Notion Minimalist Sticky Top Navigation Bar */}
+        <div className="relative border-b border-neutral-100 bg-white/95 backdrop-blur-xs shrink-0 z-10">
+          <div className="flex items-center justify-between px-4 sm:px-6 py-2.5">
+            {/* Left: Notion-style Breadcrumb / Back button */}
+            <div className="flex items-center gap-1.5 text-xs text-neutral-500">
+              <button
+                onClick={handleInitiateClose}
+                className="flex items-center gap-1.5 px-2 py-1 -ml-1.5 text-neutral-600 hover:text-black hover:bg-neutral-100 rounded-md transition-colors font-medium press-scale"
+                title="Close side peak (Esc)"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Writing</span>
+              </button>
+              <ChevronRight className="w-3 h-3 text-neutral-300" />
+              <span className="font-mono text-[11px] text-neutral-400 hidden sm:inline truncate max-w-[200px]">
+                {activePost.title}
+              </span>
+              <kbd className="hidden md:inline-block font-mono text-[10px] text-neutral-400 bg-neutral-100 border border-neutral-200 px-1 py-0.5 rounded ml-1">
                 Esc
               </kbd>
-            </button>
+            </div>
 
-            <div className="flex items-center gap-1.5">
+            {/* Right: Actions */}
+            <div className="flex items-center gap-1">
               <button
                 onClick={handleCopyLink}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-neutral-600 hover:text-black rounded-lg hover:bg-neutral-100 transition-colors press-scale"
-                title="Share article link"
+                className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-neutral-600 hover:text-black rounded-md hover:bg-neutral-100 transition-colors press-scale"
+                title="Copy link to article"
               >
                 {copied ? (
                   <>
@@ -140,8 +148,8 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
 
               <button
                 onClick={handleInitiateClose}
-                className="p-1.5 text-neutral-400 hover:text-black rounded-lg hover:bg-neutral-100 transition-colors press-scale"
-                title="Close modal (Esc)"
+                className="p-1.5 text-neutral-400 hover:text-black rounded-md hover:bg-neutral-100 transition-colors press-scale"
+                title="Close (Esc)"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -151,52 +159,72 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
           {/* Reading Progress Line */}
           <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-neutral-100">
             <div
-              className="h-full bg-black transition-all duration-100 ease-out"
+              className="h-full bg-black transition-all duration-75 ease-out"
               style={{ width: `${scrollProgress}%` }}
             />
           </div>
         </div>
 
-        {/* Scrollable Article Body */}
+        {/* Notion Document Body */}
         <div
           ref={articleContainerRef}
           onScroll={handleScroll}
-          className="flex-1 overflow-y-auto px-6 py-7 sm:px-10 sm:py-9 space-y-6"
+          className="flex-1 overflow-y-auto px-6 sm:px-12 lg:px-16 py-8 space-y-6"
         >
-          <article className="modal-content-stagger space-y-6 max-w-prose mx-auto">
-            {/* Metadata badges */}
-            <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-neutral-400">
-              <span className="flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>{activePost.date}</span>
-              </span>
-              <span>•</span>
-              <span className="flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5" />
-                <span>{activePost.readTime}</span>
-              </span>
+          <div className="max-w-2xl mx-auto space-y-6">
+            {/* Notion Page Icon */}
+            <div className="w-10 h-10 rounded-lg bg-neutral-100 border border-neutral-200/80 flex items-center justify-center text-neutral-700 shadow-2xs">
+              <FileText className="w-5 h-5" />
             </div>
 
-            {/* Title */}
-            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-neutral-900 leading-snug">
+            {/* Page Title */}
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-neutral-950 leading-tight">
               {activePost.title}
             </h1>
 
-            {/* Tag Pills */}
-            <div className="flex flex-wrap items-center gap-1.5 pt-1">
-              {activePost.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-200/60"
-                >
-                  #{tag.toLowerCase().replace(/\s+/g, '')}
+            {/* Notion Database-Style Properties Grid */}
+            <div className="space-y-2 py-3 border-y border-neutral-100 text-xs font-sans">
+              <div className="flex items-center gap-4">
+                <span className="w-24 text-neutral-400 flex items-center gap-1.5 shrink-0">
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>Date</span>
                 </span>
-              ))}
+                <span className="text-neutral-800 font-mono text-[11px]">
+                  {activePost.date}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <span className="w-24 text-neutral-400 flex items-center gap-1.5 shrink-0">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>Read time</span>
+                </span>
+                <span className="text-neutral-800 font-mono text-[11px]">
+                  {activePost.readTime}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <span className="w-24 text-neutral-400 flex items-center gap-1.5 shrink-0">
+                  <span className="w-3.5 h-3.5 text-center font-mono text-neutral-400">#</span>
+                  <span>Tags</span>
+                </span>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {activePost.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-700 border border-neutral-200/60"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Optional Cover Image */}
             {activePost.coverImage && (
-              <figure className="rounded-2xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-xs">
+              <figure className="rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 my-4 shadow-2xs">
                 <img
                   src={activePost.coverImage}
                   alt={activePost.title}
@@ -204,26 +232,24 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
                   loading="lazy"
                 />
                 {activePost.coverCaption && (
-                  <figcaption className="px-4 py-2.5 text-center text-xs font-mono text-neutral-500 bg-neutral-50 border-t border-neutral-100">
+                  <figcaption className="px-4 py-2 text-center text-xs font-mono text-neutral-500 bg-neutral-50 border-t border-neutral-100">
                     {activePost.coverCaption}
                   </figcaption>
                 )}
               </figure>
             )}
 
-            <div className="h-[1px] w-full bg-neutral-100 my-4" />
-
-            {/* Paragraphs and Inline Photos */}
-            <div className="space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed font-sans">
+            {/* Notion Article Paragraphs */}
+            <div className="space-y-4 text-[15px] sm:text-base text-neutral-800 leading-relaxed font-sans pt-2">
               {activePost.content.map((block, idx) => {
-                // Support inline image syntax: "image: /blog/photo.png | Caption text"
+                // Inline image syntax
                 if (block.startsWith('image:')) {
                   const parts = block.replace('image:', '').split('|');
                   const imgUrl = parts[0].trim();
                   const caption = parts[1] ? parts[1].trim() : '';
 
                   return (
-                    <figure key={idx} className="my-6 rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-xs">
+                    <figure key={idx} className="my-6 rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-2xs">
                       <img
                         src={imgUrl}
                         alt={caption || activePost.title}
@@ -247,17 +273,17 @@ export const BlogReaderModal: React.FC<BlogReaderModalProps> = ({ post, onClose 
               })}
             </div>
 
-            {/* Article Footer Note */}
-            <div className="mt-12 pt-6 border-t border-neutral-100 text-xs font-mono text-neutral-400 flex items-center justify-between">
+            {/* Notion Page Footer */}
+            <div className="mt-14 pt-6 border-t border-neutral-100 text-xs font-mono text-neutral-400 flex items-center justify-between">
               <span>Hugh Daeniel Dela Peña</span>
               <button
                 onClick={handleInitiateClose}
                 className="text-neutral-900 hover:underline press-scale font-medium"
               >
-                Back to portfolio ↑
+                Close side peak ↑
               </button>
             </div>
-          </article>
+          </div>
         </div>
       </div>
     </div>

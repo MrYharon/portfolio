@@ -131,8 +131,8 @@
   transform: scale(0.975);
 }
 
-/* Silky-Smooth Pop-Up Reader Animations */
-@keyframes modalBackdropEnter {
+/* Notion-Style Side Peak Animations (Zero-Lag GPU Accelerated) */
+@keyframes notionBackdropIn {
   from {
     opacity: 0;
   }
@@ -141,7 +141,7 @@
   }
 }
 
-@keyframes modalBackdropExit {
+@keyframes notionBackdropOut {
   from {
     opacity: 1;
   }
@@ -150,63 +150,40 @@
   }
 }
 
-@keyframes modalPopEnter {
+@keyframes notionPeakEnter {
   0% {
-    opacity: 0;
-    transform: translateY(32px) scale(0.93);
-    filter: blur(6px);
+    transform: translate3d(100%, 0, 0);
   }
   100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
+    transform: translate3d(0, 0, 0);
   }
 }
 
-@keyframes modalPopExit {
+@keyframes notionPeakExit {
   0% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-    filter: blur(4px);
+    transform: translate3d(100%, 0, 0);
   }
 }
 
-@keyframes contentStagger {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.notion-backdrop-enter {
+  animation: notionBackdropIn 240ms ease-out forwards;
 }
 
-.modal-backdrop-in {
-  animation: modalBackdropEnter 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.notion-backdrop-exit {
+  animation: notionBackdropOut 200ms ease-in forwards;
 }
 
-.modal-backdrop-out {
-  animation: modalBackdropExit 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.notion-peak-enter {
+  animation: notionPeakEnter 280ms cubic-bezier(0.2, 0, 0, 1) forwards;
+  will-change: transform;
 }
 
-.modal-card-in {
-  animation: modalPopEnter 380ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: transform, opacity, filter;
-}
-
-.modal-card-out {
-  animation: modalPopExit 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: transform, opacity, filter;
-}
-
-.modal-content-stagger {
-  animation: contentStagger 400ms cubic-bezier(0.16, 1, 0.3, 1) 100ms backwards;
+.notion-peak-exit {
+  animation: notionPeakExit 220ms cubic-bezier(0.4, 0, 1, 1) forwards;
+  will-change: transform;
 }
 
 
