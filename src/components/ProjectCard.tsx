@@ -11,10 +11,8 @@ interface ProjectCardProps {
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutProject }) => {
   const isEcho = project.id === 'echo-prompt-coach';
-  // State for active tab: 'demo' | 'overview' | 'highlights' | 'install'
-  const [activeTab, setActiveTab] = useState<'demo' | 'overview' | 'highlights' | 'install'>(
-    isEcho ? 'demo' : 'overview'
-  );
+  // State for active tab: 'overview' | 'demo' | 'highlights' | 'install'
+  const [activeTab, setActiveTab] = useState<'demo' | 'overview' | 'highlights' | 'install'>('overview');
 
   // State to track if the terminal command was recently copied to clipboard
   const [copied, setCopied] = useState(false);
@@ -92,6 +90,16 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
 
       {/* Interactive Tabs Navigation with smooth active indicators */}
       <div className="mt-5 flex items-center gap-1 p-1 bg-neutral-100/80 rounded-xl w-fit text-xs font-medium border border-neutral-200/50">
+        <button
+          onClick={() => setActiveTab('overview')}
+          className={`px-3 py-1.5 rounded-lg transition-all duration-150 press-scale ${
+            activeTab === 'overview'
+              ? 'bg-white text-black shadow-2xs font-semibold'
+              : 'text-neutral-500 hover:text-black'
+          }`}
+        >
+          Overview
+        </button>
         {isEcho && (
           <button
             onClick={() => setActiveTab('demo')}
@@ -105,16 +113,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
             <span>Try Echo Live</span>
           </button>
         )}
-        <button
-          onClick={() => setActiveTab('overview')}
-          className={`px-3 py-1.5 rounded-lg transition-all duration-150 press-scale ${
-            activeTab === 'overview'
-              ? 'bg-white text-black shadow-2xs font-semibold'
-              : 'text-neutral-500 hover:text-black'
-          }`}
-        >
-          Overview
-        </button>
         <button
           onClick={() => setActiveTab('highlights')}
           className={`px-3 py-1.5 rounded-lg transition-all duration-150 press-scale ${

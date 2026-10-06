@@ -90,8 +90,8 @@ export function App() {
           linkedinUrl={portfolioData.personal.linkedin}
         />
 
-        {/* Content Stream with generous bottom padding */}
-        <main className="flex-1 px-4 sm:px-8 lg:px-12 max-w-4xl w-full mx-auto pb-56">
+        {/* Content Stream with bottom padding for sticky chat */}
+        <main className="flex-1 px-4 sm:px-8 lg:px-12 max-w-4xl w-full mx-auto pb-28">
           {/* Hero Section */}
           <Hero
             personal={portfolioData.personal}

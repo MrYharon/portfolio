@@ -28,7 +28,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (initialPrompt) {
@@ -38,8 +38,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
   }, [initialPrompt]);
 
   useEffect(() => {
-    if (isOpen) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (isOpen && chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
     }
   }, [messages, isTyping, isOpen]);
 
@@ -186,7 +189,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
             </button>
           </div>
 
-          <div className="max-h-48 sm:max-h-56 overflow-y-auto space-y-2.5 text-xs pr-1">
+          <div ref={chatContainerRef} className="max-h-48 sm:max-h-56 overflow-y-auto space-y-2.5 text-xs pr-1">
             {messages.map((m, idx) => (
               <div
                 key={idx}
@@ -225,7 +228,6 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
         </div>
       )}

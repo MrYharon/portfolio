@@ -29,7 +29,6 @@ export const EchoInteractiveDemo: React.FC = () => {
   ];
 
   const [promptText, setPromptText] = useState(presets[0].text);
-  const [platform, setPlatform] = useState<'ChatGPT' | 'Claude' | 'Gemini'>('ChatGPT');
   const [justAutoCorrected, setJustAutoCorrected] = useState(false);
 
   // Real-time 100% client-side heuristic scoring engine (mimics Echo's MV3 rule engine)
@@ -155,21 +154,9 @@ export const EchoInteractiveDemo: React.FC = () => {
           <span className="font-mono text-neutral-500">100% Client-Side Engine</span>
         </div>
 
-        {/* Platform Simulator Selector */}
-        <div className="flex items-center gap-1 bg-neutral-100 p-0.5 rounded-lg font-mono text-[11px]">
-          {(['ChatGPT', 'Claude', 'Gemini'] as const).map((plat) => (
-            <button
-              key={plat}
-              onClick={() => setPlatform(plat)}
-              className={`px-2 py-0.5 rounded-md transition-all duration-150 ${
-                platform === plat
-                  ? 'bg-white text-black shadow-2xs font-semibold'
-                  : 'text-neutral-500 hover:text-black'
-              }`}
-            >
-              {plat}
-            </button>
-          ))}
+        <div className="flex items-center gap-1.5 font-mono text-[11px] text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded-md border border-neutral-200/60">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          <span>Interactive DOM Mode</span>
         </div>
       </div>
 
@@ -253,12 +240,12 @@ export const EchoInteractiveDemo: React.FC = () => {
               setJustAutoCorrected(false);
             }}
             rows={3}
-            placeholder={`Message ${platform}... (type to see real-time Echo scoring)`}
+            placeholder="Type or paste an AI prompt here to test real-time heuristics..."
             className="w-full bg-transparent text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none resize-none leading-relaxed"
           />
 
           <div className="flex items-center justify-between pt-1 border-t border-neutral-100 text-[11px] text-neutral-400 font-mono">
-            <span>Simulating input inside {platform}</span>
+            <span>Simulating prompt box evaluation</span>
             <div className="flex items-center gap-1 text-neutral-500">
               <span>{promptText.length} chars</span>
               <CornerDownLeft className="w-3 h-3 text-neutral-400" />
