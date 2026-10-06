@@ -194,8 +194,6 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
     const geminiPayload = {
       system_instruction: {
         parts: [{ text: SYSTEM_INSTRUCTION }],
@@ -208,27 +206,42 @@ export default async function handler(req: any, res: any) {
       ],
       generationConfig: {
         temperature: 0.4,
-        maxOutputTokens: 250,
+        maxOutputTokens: 800,
+        thinkingConfig: {
+          thinkingBudget: 0,
+        },
       },
     };
 
-    // Use 8-second timeout to prevent serverless function hangs
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000);
+    const callGemini = async (modelName: string) => {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+      try {
+        const resp = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(geminiPayload),
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
+        return resp;
+      } catch (err) {
+        clearTimeout(timeout);
+        throw err;
+      }
+    };
 
-    const response = await fetch(geminiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(geminiPayload),
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeout);
+    // Try gemini-3.5-flash first, then gemini-3.5-flash-lite as fallback
+    let response = await callGemini('gemini-3.5-flash');
+    if (!response.ok) {
+      console.warn('gemini-3.5-flash failed with', response.status, 'retrying with gemini-3.5-flash-lite');
+      response = await callGemini('gemini-3.5-flash-lite');
+    }
 
     if (!response.ok) {
       const errText = await response.text();
       console.error('Gemini API Error:', response.status, errText);
-      // Fallback cleanly so the frontend doesn't crash
       return sendResponse(res, 200, {
         reply: null,
         fallback: true,

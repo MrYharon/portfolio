@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, MessageSquare, Check, Copy, Terminal, Code2 } from 'lucide-react';
+import { ArrowUpRight, MessageSquare, Check, Copy, Terminal, Code2, Zap } from 'lucide-react';
 import type { Project } from '../types/portfolio';
 import { GithubIcon } from './Icons';
+import { EchoInteractiveDemo } from './EchoInteractiveDemo';
 
 interface ProjectCardProps {
   project: Project;
@@ -9,8 +10,11 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutProject }) => {
-  // State for active tab: 'overview' | 'highlights' | 'install'
-  const [activeTab, setActiveTab] = useState<'overview' | 'highlights' | 'install'>('overview');
+  const isEcho = project.id === 'echo-prompt-coach';
+  // State for active tab: 'demo' | 'overview' | 'highlights' | 'install'
+  const [activeTab, setActiveTab] = useState<'demo' | 'overview' | 'highlights' | 'install'>(
+    isEcho ? 'demo' : 'overview'
+  );
 
   // State to track if the terminal command was recently copied to clipboard
   const [copied, setCopied] = useState(false);
@@ -88,6 +92,19 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
 
       {/* Interactive Tabs Navigation with smooth active indicators */}
       <div className="mt-5 flex items-center gap-1 p-1 bg-neutral-100/80 rounded-xl w-fit text-xs font-medium border border-neutral-200/50">
+        {isEcho && (
+          <button
+            onClick={() => setActiveTab('demo')}
+            className={`px-3 py-1.5 rounded-lg transition-all duration-150 flex items-center gap-1.5 press-scale ${
+              activeTab === 'demo'
+                ? 'bg-white text-black shadow-2xs font-semibold'
+                : 'text-neutral-500 hover:text-black'
+            }`}
+          >
+            <Zap className="w-3.5 h-3.5 text-amber-500" />
+            <span>Try Echo Live</span>
+          </button>
+        )}
         <button
           onClick={() => setActiveTab('overview')}
           className={`px-3 py-1.5 rounded-lg transition-all duration-150 press-scale ${
@@ -125,6 +142,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onAskAboutPro
 
       {/* Tab Panels with smooth animation */}
       <div className="mt-4 min-h-[90px]">
+        {/* Tab 0: Interactive Echo Live Simulator */}
+        {activeTab === 'demo' && isEcho && (
+          <div key="tab-demo" className="animate-tab-fade pt-1">
+            <EchoInteractiveDemo />
+          </div>
+        )}
+
         {/* Tab 1: Overview */}
         {activeTab === 'overview' && (
           <div key="tab-overview" className="animate-tab-fade space-y-3">
