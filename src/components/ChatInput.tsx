@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Send, Sparkles, X, ArrowRight } from 'lucide-react';
 import type { PortfolioData } from '../types/portfolio';
 
@@ -28,6 +28,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (initialPrompt) {
@@ -36,6 +37,12 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
     }
   }, [initialPrompt]);
 
+  useEffect(() => {
+    if (isOpen) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages, isTyping, isOpen]);
+
   const quickPrompts = [
     { label: 'What is Echo?', prompt: 'Tell me about the Echo browser extension' },
     { label: 'Explain CodeScout', prompt: 'What is CodeScout and how does it work?' },
@@ -43,9 +50,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
     { label: 'Contact', prompt: 'How can I connect with Hugh?' },
   ];
 
-  const handleSendPrompt = (textToSend?: string) => {
+  const handleSendPrompt = async (textToSend?: string) => {
     const query = (textToSend || input).trim();
-    if (!query) return;
+    if (!query || isTyping) return;
 
     const newMessages: Message[] = [...messages, { role: 'user', content: query }];
     setMessages(newMessages);
@@ -53,35 +60,110 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
     setIsOpen(true);
     setIsTyping(true);
 
-    setTimeout(() => {
-      let reply = '';
-      let action: { label: string; sectionId: string } | undefined = undefined;
-
-      const lower = query.toLowerCase();
-
+    const getFallbackAnswer = (q: string): { reply: string; action?: { label: string; sectionId: string } } => {
+      const lower = q.toLowerCase();
       if (lower.includes('echo') || lower.includes('prompt')) {
-        reply = `Echo is a Manifest V3 Chrome extension that acts like Grammarly for AI prompting. It evaluates prompts in real-time inside ChatGPT, Claude, and Gemini with 100% local client-side heuristics and 1-click auto-correction.`;
-        action = { label: 'Jump to Echo project', sectionId: 'echo-prompt-coach' };
-      } else if (lower.includes('codescout') || lower.includes('trending') || lower.includes('github')) {
-        reply = `CodeScout is a full-stack trending GitHub tracker with Next.js 16 and FastAPI. It analyzes repository star velocity and provides an SSE-streamed AI coach for brainstorming portfolio projects.`;
-        action = { label: 'Jump to CodeScout', sectionId: 'codescout' };
-      } else if (lower.includes('project')) {
-        reply = `Hugh's featured projects include Echo (a browser extension for AI prompt coaching) and CodeScout (a trending GitHub repository tracker).`;
-        action = { label: 'View projects', sectionId: 'echo-prompt-coach' };
-      } else if (lower.includes('contact') || lower.includes('email') || lower.includes('linkedin')) {
-        reply = `You can connect with Hugh via GitHub (${portfolioData.personal.github}), LinkedIn (${portfolioData.personal.linkedin}), or email (${portfolioData.personal.email}).`;
-        action = { label: 'Go to contact', sectionId: 'contact' };
-      } else if (lower.includes('skill') || lower.includes('tech') || lower.includes('stack')) {
-        reply = `Hugh builds with TypeScript, JavaScript, Python, React, Next.js, FastAPI, Node.js, and Chrome MV3 browser extensions across his projects.`;
-        action = { label: 'View projects', sectionId: 'projects' };
-      } else {
-        reply = `Hugh is a software engineer building practical developer tools, browser extensions, and web applications.`;
-        action = { label: 'View about', sectionId: 'about' };
+        return {
+          reply: `Echo is a Manifest V3 Chrome extension that acts like Grammarly for AI prompting. It evaluates prompts in real-time inside ChatGPT, Claude, and Gemini with 100% local client-side heuristics and 1-click auto-correction.`,
+          action: { label: 'Jump to Echo project', sectionId: 'echo-prompt-coach' },
+        };
+      }
+      if (lower.includes('codescout') || lower.includes('trending') || lower.includes('github')) {
+        return {
+          reply: `CodeScout is a full-stack trending GitHub tracker with Next.js 16 and FastAPI. It analyzes repository star velocity and provides an SSE-streamed AI coach for brainstorming portfolio projects.`,
+          action: { label: 'Jump to CodeScout', sectionId: 'codescout' },
+        };
+      }
+      if (lower.includes('cleaner') || lower.includes('c-drive') || lower.includes('storage')) {
+        return {
+          reply: `C-Drive Cleaner is a lightweight 60-line Python utility that recursively cleans temp and cache folders with zero bloat or dependencies.`,
+          action: { label: 'View C-Drive Cleaner', sectionId: 'c-drive-cleaner' },
+        };
+      }
+      if (lower.includes('project')) {
+        return {
+          reply: `Hugh's featured projects include Echo (Chrome prompt coach), CodeScout (GitHub trending radar), and C-Drive Cleaner.`,
+          action: { label: 'View projects', sectionId: 'echo-prompt-coach' },
+        };
+      }
+      if (lower.includes('contact') || lower.includes('email') || lower.includes('linkedin')) {
+        return {
+          reply: `You can reach Hugh at ${portfolioData.personal.email} or connect on LinkedIn and GitHub.`,
+          action: { label: 'Go to contact', sectionId: 'contact' },
+        };
+      }
+      if (lower.includes('skill') || lower.includes('tech') || lower.includes('stack')) {
+        return {
+          reply: `Hugh works with TypeScript, JavaScript, Python, React, Next.js, FastAPI, Node.js, Tailwind CSS, and Chrome Extension APIs.`,
+          action: { label: 'View projects', sectionId: 'projects' },
+        };
+      }
+      return {
+        reply: `Hugh Daeniel Dela Peña is a software engineer building practical developer tools, browser extensions, and web systems.`,
+        action: { label: 'View about', sectionId: 'about' },
+      };
+    };
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: query }),
+      });
+
+      if (res.status === 429) {
+        // IP rate limit exceeded
+        setMessages([
+          ...newMessages,
+          {
+            role: 'assistant',
+            content: 'Rate limit reached: Please wait a minute before asking another question.',
+          },
+        ]);
+        setIsTyping(false);
+        return;
       }
 
-      setMessages([...newMessages, { role: 'assistant', content: reply, action }]);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.reply) {
+          setMessages([
+            ...newMessages,
+            {
+              role: 'assistant',
+              content: data.reply,
+              action: data.action,
+            },
+          ]);
+          setIsTyping(false);
+          return;
+        }
+      }
+
+      // Fallback if backend returned fallback flag or error
+      const fallback = getFallbackAnswer(query);
+      setMessages([
+        ...newMessages,
+        {
+          role: 'assistant',
+          content: fallback.reply,
+          action: fallback.action,
+        },
+      ]);
+    } catch {
+      // Offline / network failure fallback
+      const fallback = getFallbackAnswer(query);
+      setMessages([
+        ...newMessages,
+        {
+          role: 'assistant',
+          content: fallback.reply,
+          action: fallback.action,
+        },
+      ]);
+    } finally {
       setIsTyping(false);
-    }, 300);
+    }
   };
 
   return (
@@ -143,6 +225,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
                 </div>
               </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
         </div>
       )}
@@ -153,7 +236,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
           <button
             key={idx}
             onClick={() => handleSendPrompt(item.prompt)}
-            className="shrink-0 text-xs px-3 py-1.5 rounded-full bg-white hover:bg-neutral-50 hover:border-neutral-300 border border-neutral-200 text-neutral-700 hover:text-black transition-all duration-150 press-scale shadow-2xs hover:-translate-y-0.5"
+            disabled={isTyping}
+            className="shrink-0 text-xs px-3 py-1.5 rounded-full bg-white hover:bg-neutral-50 hover:border-neutral-300 border border-neutral-200 text-neutral-700 hover:text-black disabled:opacity-50 transition-all duration-150 press-scale shadow-2xs hover:-translate-y-0.5"
           >
             {item.label}
           </button>
@@ -167,6 +251,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
         <input
           type="text"
           value={input}
+          maxLength={280}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
@@ -179,7 +264,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ portfolioData, onNavigate,
 
         <button
           onClick={() => handleSendPrompt()}
-          disabled={!input.trim()}
+          disabled={!input.trim() || isTyping}
           className="p-1.5 rounded-full text-black hover:bg-neutral-100 disabled:text-neutral-300 disabled:hover:bg-transparent transition-all duration-150 press-scale ml-1"
           title="Send"
         >
